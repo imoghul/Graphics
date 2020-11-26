@@ -6,7 +6,7 @@ public class Slider extends Button {
     boolean vertical, horizontal;
 
     public double midBarX, midBarY, midBarW, midBarH;
-    private Drawer midBar;
+    private Area midBar;
     private double midBarWH = 3;
 
     public double min = 0.0, max = 1.0;
@@ -43,7 +43,7 @@ public class Slider extends Button {
             midBarW = midBarWH;
             midBarX = x - (int) midBarW / 2;
         }
-        midBar = new Drawer(midBarX, midBarY, midBarW, midBarH, "rect");
+        midBar = new Area(midBarX, midBarY, midBarW, midBarH, "rect");
     }
 
     public Slider(double x, double y, double w, double h, boolean vert, boolean hori, double min, double max,
@@ -80,7 +80,7 @@ public class Slider extends Button {
             midBarW = midBarWH;
             midBarX = getX() - (int) midBarW / 2;
         }
-        midBar = new Drawer(midBarX, midBarY, midBarW, midBarH, "rect");
+        midBar = new Area(midBarX, midBarY, midBarW, midBarH, "rect");
     }
 
     public void slide(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed, String type,
@@ -97,7 +97,7 @@ public class Slider extends Button {
         drawState(g, unpressed, pressed, filled, filledPressed, type, mouseX, mouseY, xOrig, yOrig, justPressed,
                 ispressed, occupied);
         midBar.draw(g, Color.gray, true);
-        new Drawer(getX(), getY(), 5, 5).draw(g, Color.white, true, "oval");
+        new Area(getX(), getY(), 5, 5).draw(g, Color.white, true, "oval");
     }
 
     public double getVal(double minimum, double maximum) {
@@ -131,22 +131,22 @@ public class Slider extends Button {
     }
 
     @Override
-    public Drawer getMidBar() {
+    public Area getMidBar() {
         updateMidBar();
         return midBar;
     }
 
     @Override
-    public Drawer getBoundingBox() {
+    public Area getBoundingBox() {
         updateMidBar();
         if (getType().equals("oval")) {
             if (horizontal) {
-                return new Drawer(getMinX(), getMinY() - getH() / 2, midBarW, getH() + 1, "rect");
+                return new Area(getMinX(), getMinY() - getH() / 2, midBarW, getH() + 1, "rect");
             } else if (vertical) {
-                return new Drawer(getMinX() - getW() / 2, getMinY(), getW(), midBarH, "rect");
+                return new Area(getMinX() - getW() / 2, getMinY(), getW(), midBarH, "rect");
             }
         }
-        return new Drawer(0, 0, 0, 0);
+        return new Area(0, 0, 0, 0);
     }
 
 }

@@ -2,7 +2,7 @@ package Graphics;
 
 import java.awt.*;
 
-public class Button extends Drawer {
+public class Button extends Area {
     Collision checker = new Collision();
     boolean wasIn = false;
     boolean beganIn = false;
@@ -66,11 +66,11 @@ public class Button extends Drawer {
         return getType().equals("clear");// && getX() == 0 && getY() == 0 && getW() == 0 && getH() == 0;
     }
 
-    public Drawer getMidBar() {
+    public Area getMidBar() {
         return this;
     }
 
-    public Drawer getBoundingBox() {
+    public Area getBoundingBox() {
         return this;
     }
 

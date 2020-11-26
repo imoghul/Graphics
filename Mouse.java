@@ -43,7 +43,7 @@ public class Mouse {
         return y;
     }
 
-    public double getXClciked() {
+    public double getXClicked() {
         return xClicked;
     }
 

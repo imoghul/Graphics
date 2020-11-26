@@ -50,7 +50,7 @@ public class Slider extends Button {
             midBarW = midBarWH;
             midBarX = x - (int) midBarW / 2;
         }
-        midBar = new Area(midBarX, midBarY, midBarW, midBarH, "rect");
+        midBar = new Area(midBarX, midBarY, midBarW, midBarH, "rect normal");
     }
 
     public Slider(double x, double y, double w, double h, boolean vert, boolean hori, double min, double max,
@@ -153,9 +153,9 @@ public class Slider extends Button {
         updateMidBar();
         if (getType().equals("oval")) {
             if (horizontal) {
-                return new Area(getMinX(), getMinY() - getH() / 2, midBarW, getH() + 1, "rect");
+                return new Area(getMinX(), getMinY() - getH() / 2, midBarW, getH() + 1, "rect normal");
             } else if (vertical) {
-                return new Area(getMinX() - getW() / 2, getMinY(), getW(), midBarH, "rect");
+                return new Area(getMinX() - getW() / 2, getMinY(), getW(), midBarH, "rect normal");
             }
         }
         return new Area(0, 0, 0, 0);

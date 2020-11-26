@@ -16,7 +16,7 @@ public class Button extends Area {
         super(x, y, w, h, t);
     }
 
-    public boolean isPressed(double x, double y, double xOrig, double yOrig, boolean justPressed, boolean pressed,
+    private boolean isPressed(double x, double y, double xOrig, double yOrig, boolean justPressed, boolean pressed,
             Button occupied) {
         mouseX = x;
         mouseY = y;
@@ -41,6 +41,11 @@ public class Button extends Area {
         }
     }
 
+    public boolean isPressed(Mouse m) {
+        isPressed(m.getX(), m.getY(), m.getXClicked(), m.getYClicked(), m.getJustClicked(), m.getIsPressed(),
+                m.getOccupied());
+    }
+
     private boolean isIn(double x, double y) {
         return checker.autoIsIn(x, y, this) || checker.autoIsIn(x, y, getBoundingBox());// checker.autoIsIn(x, y, this)
                                                                                         // ||
@@ -49,9 +54,9 @@ public class Button extends Area {
     }
 
     public void drawState(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed,
-            String type, double mX, double mY, double xOrig, double yOrig, boolean justPressed, boolean ispressed,
-            Button occupied) {
-        if (isPressed(mX, mY, xOrig, yOrig, justPressed, ispressed, occupied)) {// !this.isPressed(mX, mY)) {
+            String type, Mouse m) {
+        if (isPressed(m.getX(), m.getY(), m.getXClicked(), m.getYClicked(), m.getJustClicked(), m.getIsPressed(),
+                m.getOccupied())) {// !this.isPressed(mX, mY)) {
             draw(g, unpressed, filled, type);
         } else {
             draw(g, pressed, filledPressed, type);

@@ -83,7 +83,7 @@ public class Slider extends Button {
         midBar = new Area(midBarX, midBarY, midBarW, midBarH, "rect");
     }
 
-    public void slide(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed, String type,
+    protected void slide(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed, String type,
             double mouseX, double mouseY, double xOrig, double yOrig, boolean justPressed, boolean ispressed,
             Button occupied) {
         updateMidBar();
@@ -98,6 +98,12 @@ public class Slider extends Button {
                 ispressed, occupied);
         midBar.draw(g, Color.gray, true);
         new Area(getX(), getY(), 5, 5).draw(g, Color.white, true, "oval");
+    }
+
+    public void slide(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed, String type,
+            Mouse m) {
+        slide(g, unpressed, pressed, filled, filledPressed, type, m.getX(), m.getY(), m.getXClicked(), m.getYClicked(),
+                m.getJustClicked(), m.getIsPressed(), m.getOccupied());
     }
 
     public double getVal(double minimum, double maximum) {

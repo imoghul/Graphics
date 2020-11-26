@@ -56,8 +56,14 @@ public class Button extends Area {
 
     public void drawState(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed,
             String type, Mouse m) {
-        if (isPressed(m.getX(), m.getY(), m.getXClicked(), m.getYClicked(), m.getJustClicked(), m.getIsPressed(),
-                m.getOccupied())) {// !this.isPressed(mX, mY)) {
+        drawState(g, unpressed, pressed, filled, filledPressed, type, m.getX(), m.getY(), m.getXClicked(),
+                m.getYClicked(), m.getJustClicked(), m.getIsPressed(), m.getOccupied());
+    }
+
+    protected void drawState(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed,
+            String type, double mX, double mY, double xOrig, double yOrig, boolean justPressed, boolean isPressed,
+            Button occupied) {
+        if (isPressed(mX, mY, xOrig, yOrig, justPressed, isPressed, occupied)) {// !this.isPressed(mX, mY)) {
             draw(g, unpressed, filled, type);
         } else {
             draw(g, pressed, filledPressed, type);

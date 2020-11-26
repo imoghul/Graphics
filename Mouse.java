@@ -3,9 +3,9 @@ package Graphics;
 import Graphics.Area;
 
 public class Mouse {
-    private double x, y, xClicked, yClicked;
-    private boolean isPressed, justClicked;
-    private Area occupiedRegion;
+    private double x = 0, y = 0, xClicked = 0, yClicked = 0;
+    private boolean isPressed = false, justClicked = false;
+    private Area occupiedRegion = new Area(0, 0, 0, 0, "clear");
 
     public void setX(double newX) {
         x = newX;

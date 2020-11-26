@@ -24,9 +24,9 @@ public class Slider extends Button {
     }
 
     private void legalInput(boolean v, boolean h) throws Exception {
-        if (!(vert == true && hori == true)) {
-            vertical = vert;
-            horizontal = hori;
+        if (!(v == true && h == true)) {
+            vertical = v;
+            horizontal = h;
         } else {
             throw new Exception("Vertical and Horizontal");
         }

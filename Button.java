@@ -43,7 +43,7 @@ public class Button extends Area {
     }
 
     public boolean isPressed(Mouse m) {
-        isPressed(m.getX(), m.getY(), m.getXClicked(), m.getYClicked(), m.getJustClicked(), m.getIsPressed(),
+        return isPressed(m.getX(), m.getY(), m.getXClicked(), m.getYClicked(), m.getJustClicked(), m.getIsPressed(),
                 m.getOccupied());
     }
 

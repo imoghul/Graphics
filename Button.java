@@ -20,7 +20,8 @@ public class Button extends Area {
     protected boolean isPressed(double x, double y, double xOrig, double yOrig, boolean pressed, Button occupied) {
         mouseX = x;
         mouseY = y;
-        if (!pressed) {
+        boolean justPressed = !pressed;
+        if (justPressed) {
             beganIn = isIn(xOrig, yOrig) && justPressed;
         }
         if (pressed && beganIn) {

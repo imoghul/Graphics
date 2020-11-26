@@ -85,10 +85,9 @@ public class Slider extends Button {
     }
 
     protected void slide(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed, String type,
-            double mouseX, double mouseY, double xOrig, double yOrig, boolean justPressed, boolean ispressed,
-            Button occupied) {
+            double mouseX, double mouseY, double xOrig, double yOrig, boolean ispressed, Button occupied) {
         updateMidBar();
-        if (isPressed(mouseX, mouseY, xOrig, yOrig, justPressed, ispressed, occupied)) {
+        if (isPressed(mouseX, mouseY, xOrig, yOrig, ispressed, occupied)) {
             setXSafe(mouseX);
             setYSafe(mouseY);
         } else {
@@ -104,7 +103,7 @@ public class Slider extends Button {
     public void slide(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed, String type,
             Mouse m) {
         slide(g, unpressed, pressed, filled, filledPressed, type, m.getX(), m.getY(), m.getXClicked(), m.getYClicked(),
-                m.getJustClicked(), m.getIsPressed(), m.getOccupied());
+                m.getOccupied());
     }
 
     public double getVal(double minimum, double maximum) {

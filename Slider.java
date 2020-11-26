@@ -103,7 +103,7 @@ public class Slider extends Button {
     public void slide(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed, String type,
             Mouse m) {
         slide(g, unpressed, pressed, filled, filledPressed, type, m.getX(), m.getY(), m.getXClicked(), m.getYClicked(),
-                m.getOccupied());
+                m.getIsPressed(), m.getOccupied());
     }
 
     public double getVal(double minimum, double maximum) {

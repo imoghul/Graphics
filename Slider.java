@@ -16,12 +16,7 @@ public class Slider extends Button {
         super(x, y, w, h);
         min = small;
         max = big;
-        if (!(vert == true && hori == true)) {
-            vertical = vert;
-            horizontal = hori;
-        } else {
-            throw new Exception("Vertical and Horizontal");
-        }
+        legalInput(vert, hori);
     }
 
     private void legalInput(boolean v, boolean h) throws Exception {

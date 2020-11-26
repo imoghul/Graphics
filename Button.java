@@ -21,7 +21,7 @@ public class Button extends Area {
             Button occupied) {
         mouseX = x;
         mouseY = y;
-        if (justPressed) {
+        if (!pressed) {
             beganIn = isIn(xOrig, yOrig) && justPressed;
         }
         if (pressed && beganIn) {

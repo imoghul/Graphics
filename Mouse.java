@@ -4,7 +4,7 @@ import Graphics.Area;
 import Graphics.Button;
 
 public class Mouse {
-    private double x = 0, y = 0, xClicked = 0, yClicked = 0;
+    private double x = 0, y = 0, xBeforeClicked = 0, yBeforeClicked = 0;
     private boolean isPressed = false, justClicked = false;
     private Button occupiedRegion = new Button(0, 0, 0, 0, "clear");
 
@@ -17,11 +17,11 @@ public class Mouse {
     }
 
     public void setXClciked(double newX) {
-        xClicked = newX;
+        xBeforeClicked = newX;
     }
 
     public void setYClicked(double newY) {
-        yClicked = newY;
+        yBeforeClicked = newY;
     }
 
     public void setIsPressed(boolean ispressed) {
@@ -45,11 +45,11 @@ public class Mouse {
     }
 
     public double getXClicked() {
-        return xClicked;
+        return xBeforeClicked;
     }
 
     public double getYClicked() {
-        return yClicked;
+        return yBeforeClicked;
     }
 
     public boolean getIsPressed() {
@@ -68,9 +68,11 @@ public class Mouse {
         setX(newX);
         setY(newY);
         if (!isPressed) {
-            xClicked = x;// MouseInfo.getPointerInfo().getLocation().x;
-            yClicked = y;// MouseInfo.getPointerInfo().getLocation().y;
-            justClicked = true;
+            xBeforeClicked = x;// MouseInfo.getPointerInfo().getLocation().x;
+            yBeforeClicked = y;// MouseInfo.getPointerInfo().getLocation().y;
+            if (!justClicked) {
+                justClicked = true;
+            }
         } else {
             justClicked = false;
         }

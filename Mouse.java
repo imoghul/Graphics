@@ -5,7 +5,7 @@ import Graphics.Button;
 
 public class Mouse {
     private double x = 0, y = 0, xBeforeClicked = 0, yBeforeClicked = 0;
-    private boolean isPressed = false, justClicked = false;
+    private boolean isPressed = false;
     private Button occupiedRegion = new Button(0, 0, 0, 0, "clear");
 
     public void setX(double newX) {
@@ -26,10 +26,6 @@ public class Mouse {
 
     public void setIsPressed(boolean ispressed) {
         isPressed = ispressed;
-    }
-
-    public void setJustClicked(boolean justclicked) {
-        justClicked = justclicked;
     }
 
     public void setOccupied(Button newRegion) {
@@ -54,10 +50,6 @@ public class Mouse {
 
     public boolean getIsPressed() {
         return isPressed;
-    }
-
-    public boolean getJustClicked() {
-        return justClicked;
     }
 
     public Button getOccupied() {

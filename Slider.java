@@ -24,7 +24,7 @@ public class Slider extends Button {
             vertical = v;
             horizontal = h;
         } else {
-            throw new Exception("Vertical and Horizontal");
+            throw new IllegalArgumentException("Vertical and Horizontal");
         }
     }
 

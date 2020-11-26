@@ -16,11 +16,7 @@ public class Slider extends Button {
         super(x, y, w, h);
         min = small;
         max = big;
-        try {
-            legalInput(vert, hori);
-        } catch (Exception e) {
-            System.out.println("Cannot Be Vertical and Horizontal");
-        }
+        legalInput(vert, hori);
     }
 
     private void legalInput(boolean v, boolean h) throws Exception {

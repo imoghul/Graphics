@@ -60,8 +60,7 @@ public class Button extends Area {
     }
 
     protected void drawState(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed,
-            String type, double mX, double mY, double xOrig, double yOrig, boolean justPressed, boolean isPressed,
-            Button occupied) {
+            String type, double mX, double mY, double xOrig, double yOrig, boolean isPressed, Button occupied) {
         if (isPressed(mX, mY, xOrig, yOrig, isPressed, occupied)) {// !this.isPressed(mX, mY)) {
             draw(g, pressed, filled, type);
         } else {

@@ -1,5 +1,6 @@
 package Graphics;
 
+import Graphics.Mouse;
 import java.awt.*;
 
 public class Button extends Area {
@@ -16,7 +17,7 @@ public class Button extends Area {
         super(x, y, w, h, t);
     }
 
-    private boolean isPressed(double x, double y, double xOrig, double yOrig, boolean justPressed, boolean pressed,
+    protected boolean isPressed(double x, double y, double xOrig, double yOrig, boolean justPressed, boolean pressed,
             Button occupied) {
         mouseX = x;
         mouseY = y;
@@ -61,10 +62,6 @@ public class Button extends Area {
         } else {
             draw(g, pressed, filledPressed, type);
         }
-    }
-
-    public boolean isPressed(Point p) {
-        return false;// isPressed(p.getX(), p.getY());
     }
 
     public boolean isClear() {

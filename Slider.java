@@ -1,5 +1,6 @@
 package Graphics;
 
+import Graphics.Mouse;
 import java.awt.*;
 
 public class Slider extends Button {

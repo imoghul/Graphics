@@ -1,11 +1,12 @@
 package Graphics;
 
 import Graphics.Area;
+import Graphics.Button;
 
 public class Mouse {
     private double x = 0, y = 0, xClicked = 0, yClicked = 0;
     private boolean isPressed = false, justClicked = false;
-    private Area occupiedRegion = new Area(0, 0, 0, 0, "clear");
+    private Button occupiedRegion = new Button(0, 0, 0, 0, "clear");
 
     public void setX(double newX) {
         x = newX;
@@ -31,7 +32,7 @@ public class Mouse {
         justClicked = justclicked;
     }
 
-    public void setOccupied(Area newRegion) {
+    public void setOccupied(Button newRegion) {
         occupiedRegion = newRegion;
     }
 
@@ -59,7 +60,7 @@ public class Mouse {
         return justClicked;
     }
 
-    public Area getOccupied() {
+    public Button getOccupied() {
         return occupiedRegion;
     }
 
@@ -76,6 +77,6 @@ public class Mouse {
     }
 
     public void clear() {
-        setOccupied(new Area(0, 0, 0, 0, "clear"));
+        setOccupied(new Button(0, 0, 0, 0, "clear"));
     }
 }

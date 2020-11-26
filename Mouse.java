@@ -72,6 +72,8 @@ public class Mouse {
             yBeforeClicked = y;// MouseInfo.getPointerInfo().getLocation().y;
             if (!justClicked) {
                 justClicked = true;
+            } else {
+                justClicked = false;
             }
         } else {
             justClicked = false;

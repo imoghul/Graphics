@@ -17,9 +17,10 @@ public class Slider extends Button {
         min = small;
         max = big;
         if (!(vert == true && hori == true)) {
-            throw new Exception("Cannot Be Vertical adn Horizontal");
-            // vertical = vert;
-            // horizontal = hori;
+            vertical = vert;
+            horizontal = hori;
+        } else {
+            throw new Exception("Cannot Be Vertical and Horizontal");
         }
     }
 

@@ -94,8 +94,8 @@ public class Slider extends Button {
             setXSafe(getX());
             setYSafe(getY());
         }
-        drawState(g, unpressed, pressed, filled, filledPressed, type, mouseX, mouseY, xOrig, yOrig, justPressed,
-                ispressed, occupied);
+        drawState(g, unpressed, pressed, filled, filledPressed, type, mouseX, mouseY, xOrig, yOrig, ispressed,
+                occupied);
         midBar.draw(g, Color.gray, true);
         new Area(getX(), getY(), 5, 5).draw(g, Color.white, true, "oval");
     }

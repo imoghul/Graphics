@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 public class Area {
 
     private double x, y, w, h;
-    private String type;
+    private String type;// "type subType subsubType ..."
     private double minX = Double.MIN_VALUE;
     private double minY = Double.MIN_VALUE;
     private double maxX = Double.MAX_VALUE;
@@ -79,8 +79,17 @@ public class Area {
     }
 
     public String getType() {
-        if (type != null) {
-            return type;
+        if (type != null && type.split(" ").length >= 1) {
+            return type.split(" ")[0];
+        }
+        return "";
+    }
+
+    public String getSubType() {
+        if (type != null && type.split(" ").length > 1) {
+            return type.split(" ")[1];
+        } else if (type != null && !(type.split(" ").length > 1)) {
+            return "normal";
         }
         return "";
     }
@@ -224,7 +233,7 @@ public class Area {
     }
 
     public void rect(Graphics g, Color c, boolean filled) {
-        type = "rect";
+        type = "rect normal";
         g.setColor(c);
         if (filled) {
             g.fillRect((int) getX(), (int) getY(), (int) getW(), (int) getH());
@@ -238,9 +247,9 @@ public class Area {
         type = "rect centered";
         g.setColor(c);
         if (filled) {
-            g.fillRect((int) (getX() + w / 2.0), (int) (getY() + h / 2.0), (int) getW(), (int) getH());
+            g.fillRect((int) (getX() - w / 2.0), (int) (getY() - h / 2.0), (int) getW(), (int) getH());
         } else {
-            g.drawRect((int) (getX() + w / 2.0), (int) (getY() + h / 2.0), (int) getW(), (int) getH());
+            g.drawRect((int) (getX() - w / 2.0), (int) (getY() - h / 2.0), (int) getW(), (int) getH());
         }
     }
 
@@ -267,12 +276,14 @@ public class Area {
     }
 
     public void draw(Graphics g, Color c, boolean filled) {
-        if (type.equals("rect")) {
-            rect(g, c, filled);
-        } else if (type.equals("oval")) {
+        if (getType().equals("rect")) {
+            if (getSubType().equals("normal")) {
+                rect(g, c, filled);
+            } else if (getSubType().equals("centered")) {
+                rectCentered(g, c, filled);
+            }
+        } else if (getType().equals("oval")) {
             oval(g, c, filled);
-        } else if (type.equals("rectCentered")) {
-            rectCentered(g, c, filled);
         }
     }
 

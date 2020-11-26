@@ -50,7 +50,7 @@ public class Slider extends Button {
             midBarW = midBarWH;
             midBarX = x - (int) midBarW / 2;
         }
-        midBar = new Area(midBarX, midBarY, midBarW, midBarH, "rect");
+        midBar = new Area(midBarX, midBarY, midBarW, midBarH, "rect normal");
     }
 
     public Slider(double x, double y, double w, double h, boolean vert, boolean hori, double min, double max,

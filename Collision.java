@@ -5,8 +5,30 @@ public class Collision {
     public int displayW = 0, displayH;
 
     public boolean rectCollide(Area one, Area two) {
-        double x = one.getX(), y = one.getY(), w = one.getW(), h = one.getH();
-        double x2 = two.getX(), y2 = two.getY(), w2 = two.getW(), h2 = two.getH();
+        double x = 0, x2 = 0, y = 0, y2 = 0, w = 0, w2 = 0, h = 0, h2 = 0;
+        if (one.getSubType().equals("normal")) {
+            x = one.getX();
+            y = one.getY();
+            w = one.getW();
+            h = one.getH();
+        } else if (one.getSubType().equals("centered")) {
+            x = one.getX() - one.getW() / 2;
+            y = one.getY() - one.getH() / 2;
+            w = one.getW();
+            h = one.getH();
+        }
+        if (two.getSubType().equals("normal")) {
+            x2 = two.getX();
+            y2 = two.getY();
+            w2 = two.getW();
+            h2 = two.getH();
+        } else if (two.getSubType().equals("centered")) {
+            x2 = two.getX() - two.getW() / 2;
+            y2 = two.getY() - one.getH() / 2;
+            w2 = two.getW();
+            h2 = two.getH();
+        }
+
         return (((x2 + w2 >= x) && (x2 <= x + w)) && ((y2 <= y + h) && (y2 + h2 >= y)));
     }
 
@@ -48,7 +70,20 @@ public class Collision {
     }
 
     public boolean pointInRect(double xcoor, double ycoor, Area rect) {
-        double x2 = rect.getX(), y2 = rect.getY(), w2 = rect.getW(), h2 = rect.getH();
+        // double x2 = rect.getX(), y2 = rect.getY(), w2 = rect.getW(), h2 =
+        // rect.getH();
+        double x2 = 0, y2 = 0, w2 = 0, h2 = 0;
+        if (rect.getSubType().equals("normal")) {
+            x2 = rect.getX();
+            y2 = rect.getY();
+            w2 = rect.getW();
+            h2 = rect.getH();
+        } else if (rect.getSubType().equals("centered")) {
+            x2 = rect.getX() - rect.getW() / 2;
+            y2 = rect.getY() - rect.getH() / 2;
+            w2 = rect.getW();
+            h2 = rect.getH();
+        }
         return ((xcoor >= x2) && (xcoor <= (x2 + w2)) && (ycoor >= y2) && (ycoor <= (y2 + h2)));
     }
 

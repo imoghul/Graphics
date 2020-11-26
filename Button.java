@@ -64,9 +64,9 @@ public class Button extends Area {
             String type, double mX, double mY, double xOrig, double yOrig, boolean justPressed, boolean isPressed,
             Button occupied) {
         if (isPressed(mX, mY, xOrig, yOrig, justPressed, isPressed, occupied)) {// !this.isPressed(mX, mY)) {
-            draw(g, unpressed, filled, type);
+            draw(g, pressed, filled, type);
         } else {
-            draw(g, pressed, filledPressed, type);
+            draw(g, unpressed, filledPressed, type);
         }
     }
 

@@ -235,18 +235,13 @@ public class Area {
     }
 
     public void rectCentered(Graphics g, Color c, boolean filled) {
-        type = "rectCentered";
-        x -= w / 2.0;
-        y -= h / 2.0;
+        type = "rect centered";
         g.setColor(c);
         if (filled) {
-            g.fillRect((int) getX(), (int) getY(), (int) getW(), (int) getH());
+            g.fillRect((int) (getX() + w / 2.0), (int) (getY() + h / 2.0), (int) getW(), (int) getH());
         } else {
-            g.drawRect((int) getX(), (int) getY(), (int) getW(), (int) getH());// g.drawRect(getX(), getY(), getW(),
-                                                                               // getH());
+            g.drawRect((int) (getX() + w / 2.0), (int) (getY() + h / 2.0), (int) getW(), (int) getH());
         }
-        x += w / 2.0;
-        y += h / 2.0;
     }
 
     public void clear(Graphics g) {

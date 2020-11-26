@@ -74,4 +74,8 @@ public class Mouse {
             justClicked = false;
         }
     }
+
+    public void clear() {
+        setOccupied(new Area(0, 0, 0, 0, "clear"));
+    }
 }

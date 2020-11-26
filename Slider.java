@@ -153,9 +153,9 @@ public class Slider extends Button {
         updateMidBar();
         if (getType().equals("oval")) {
             if (horizontal) {
-                return new Area(getMinX(), getMinY() - getH() / 2, midBarW, getH() + 1, "rect");
+                return new Area(getMinX(), getMinY() - getH() / 2, midBarW, getH() + 1, "rect normal");
             } else if (vertical) {
-                return new Area(getMinX() - getW() / 2, getMinY(), getW(), midBarH, "rect");
+                return new Area(getMinX() - getW() / 2, getMinY(), getW(), midBarH, "rect normal");
             }
         }
         return new Area(0, 0, 0, 0);

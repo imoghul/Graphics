@@ -19,7 +19,7 @@ public class Slider extends Button {
         legalInput(vert, hori);
     }
 
-    private void legalInput(boolean v, boolean h) throws Exception {
+    private void legalInput(boolean v, boolean h) {
         if (!(v == true && h == true)) {
             vertical = v;
             horizontal = h;

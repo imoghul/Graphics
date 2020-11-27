@@ -19,11 +19,12 @@ public class Drawer {
 
     public PIDController xcontroller;
     public PIDController ycontroller;
-    int delay = 10;// Main.timerSpeed;
+    public int delay = 20;// Main.timerSpeed;
 
-    public Drawer(double newX, double newY, double P, double I, double D) {
+    public Drawer(double newX, double newY, double P, double I, double D, int d) {
         x = newX;
         y = newY;
+        delay = d;
         xcontroller = new PIDController(P, I, D, (double) delay / 1000.0);
         ycontroller = new PIDController(P, I, D, (double) delay / 1000.0);
     }
@@ -41,20 +42,21 @@ public class Drawer {
         // this.delay = newOne.delay;
     }
 
-    public Drawer(double newX, double newY) {
+    public Drawer(double newX, double newY, int d) {
         x = newX;
         y = newY;
+        delay = d;
         xcontroller = new PIDController(1, 0, 0, (double) delay / 1000.0);
         ycontroller = new PIDController(1, 0, 0, (double) delay / 1000.0);
     }
 
-    public Drawer(double newX, double newY, String t) {
-        this(newX, newY);
+    public Drawer(double newX, double newY, String t, int d) {
+        this(newX, newY, d);
         type = t;
     }
 
-    public Drawer(double newX, double newY, double P, double I, double D, String t) {
-        this(newX, newY, P, I, D);
+    public Drawer(double newX, double newY, double P, double I, double D, String t, int d) {
+        this(newX, newY, P, I, D, d);
         type = t;
     }
 
@@ -160,11 +162,11 @@ public class Drawer {
         if (Math.abs(actual - desired) > 0.01) {
             actual = xcontroller.PIDout(actual, desired);
             setX(actual);
-            try {
-                Thread.sleep(delay);
-            } catch (InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
+            // try {
+            // Thread.sleep(delay);
+            // } catch (InterruptedException ex) {
+            // Thread.currentThread().interrupt();
+            // }
             return false;
         } else {
             xcontroller.reset();
@@ -177,11 +179,11 @@ public class Drawer {
         if (Math.abs(actual - desired) > 0.01) {
             actual = ycontroller.PIDout(actual, desired);
             setY(actual);
-            try {
-                Thread.sleep(delay);
-            } catch (InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
+            // try {
+            // Thread.sleep(delay);
+            // } catch (InterruptedException ex) {
+            // Thread.currentThread().interrupt();
+            // }
             return false;
         } else {
             ycontroller.reset();
@@ -204,6 +206,14 @@ public class Drawer {
 
     public boolean isClear() {
         return getType().equals("clear");
+    }
+
+    public void sleep() {
+        try {
+            Thread.sleep(delay);
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
+        }
     }
 
 }

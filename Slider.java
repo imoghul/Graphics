@@ -12,8 +12,8 @@ public class Slider extends Button {
 
     public double min = 0.0, max = 1.0;
 
-    public Slider(double x, double y, double w, double h, boolean vert, boolean hori, double small, double big) {
-        super(x, y, w, h);
+    public Slider(double x, double y, double w, double h, boolean vert, boolean hori, double small, double big, int d) {
+        super(x, y, w, h, d);
         min = small;
         max = big;
         legalInput(vert, hori);
@@ -29,8 +29,8 @@ public class Slider extends Button {
     }
 
     public Slider(double x, double y, double w, double h, boolean vert, boolean hori, double min, double max,
-            double small, double big) {
-        this(x, y, w, h, vert, hori, small, big);
+            double small, double big, int d) {
+        this(x, y, w, h, vert, hori, small, big, d);
         if (horizontal) {
             setMinY(y);
             setMaxY(y);
@@ -50,12 +50,12 @@ public class Slider extends Button {
             midBarW = midBarWH;
             midBarX = x - (int) midBarW / 2;
         }
-        midBar = new Shape(midBarX, midBarY, midBarW, midBarH, "rect normal");
+        midBar = new Shape(midBarX, midBarY, midBarW, midBarH, "rect normal", d);
     }
 
     public Slider(double x, double y, double w, double h, boolean vert, boolean hori, double min, double max,
-            double small, double big, double initial) {
-        this(x, y, w, h, vert, hori, min, max, small, big);
+            double small, double big, double initial, int d) {
+        this(x, y, w, h, vert, hori, min, max, small, big, d);
         setVal(initial);
     }
 
@@ -87,7 +87,7 @@ public class Slider extends Button {
             midBarW = midBarWH;
             midBarX = getX() - (int) midBarW / 2;
         }
-        midBar = new Shape(midBarX, midBarY, midBarW, midBarH, "rect");
+        midBar = new Shape(midBarX, midBarY, midBarW, midBarH, "rect", delay);
     }
 
     protected void slide(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed, String type,
@@ -103,7 +103,7 @@ public class Slider extends Button {
         drawState(g, unpressed, pressed, filled, filledPressed, type, mouseX, mouseY, xOrig, yOrig, ispressed,
                 occupied);
         midBar.draw(g, Color.gray, true);
-        new Shape(getX(), getY(), 5, 5).draw(g, Color.white, true, "oval");
+        new Shape(getX(), getY(), 5, 5, delay).draw(g, Color.white, true, "oval");
     }
 
     public void slide(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed, String type,
@@ -153,12 +153,12 @@ public class Slider extends Button {
         updateMidBar();
         if (getType().equals("oval")) {
             if (horizontal) {
-                return new Shape(getMinX(), getMinY() - getH() / 2, midBarW, getH() + 1, "rect normal");
+                return new Shape(getMinX(), getMinY() - getH() / 2, midBarW, getH() + 1, "rect normal", delay);
             } else if (vertical) {
-                return new Shape(getMinX() - getW() / 2, getMinY(), getW(), midBarH, "rect normal");
+                return new Shape(getMinX() - getW() / 2, getMinY(), getW(), midBarH, "rect normal", delay);
             }
         }
-        return new Shape(0, 0, 0, 0);
+        return new Shape(0, 0, 0, 0, delay);
     }
 
 }

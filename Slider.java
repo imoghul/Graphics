@@ -5,10 +5,12 @@ import java.awt.*;
 
 public class Slider extends Button {
     boolean vertical, horizontal;
-
+    // for child classes: super(b.getX(), b.getY(), b.getW(), b.getH(),
+    // b.getTypeFull(), b.delay);
     public double midBarX, midBarY, midBarW, midBarH;
     private Shape midBar;
     private double midBarWH = 3;
+    public double lastVal = 0;
 
     public double min = 0.0, max = 1.0;
 
@@ -56,7 +58,13 @@ public class Slider extends Button {
     public Slider(double x, double y, double w, double h, boolean vert, boolean hori, double min, double max,
             double small, double big, double initial, int d) {
         this(x, y, w, h, vert, hori, min, max, small, big, d);
+        lastVal = initial;
         setVal(initial);
+    }
+
+    public Slider(Slider s) {
+        this(s.getX(), s.getY(), s.getW(), s.getH(), s.vertical, s.horizontal, s.getMinCoor(), s.getMaxCoor(), s.min,
+                s.max, s.lastVal, s.delay);
     }
 
     public void setMinCoor(double coor) {
@@ -73,6 +81,24 @@ public class Slider extends Button {
         } else if (vertical) {
             setMaxY(coor);
         }
+    }
+
+    public double getMaxCoor() {
+        if (horizontal) {
+            return getMaxX();
+        } else if (vertical) {
+            return getMaxY();
+        }
+        return 0;
+    }
+
+    public double getMinCoor() {
+        if (horizontal) {
+            return getMinX();
+        } else if (vertical) {
+            return getMinY();
+        }
+        return 0;
     }
 
     private void updateMidBar() {
@@ -93,6 +119,7 @@ public class Slider extends Button {
     protected void slide(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed, String type,
             double mouseX, double mouseY, double xOrig, double yOrig, boolean ispressed, Button occupied) {
         updateMidBar();
+        setVal(lastVal);
         if (isPressed(mouseX, mouseY, xOrig, yOrig, ispressed, occupied)) {
             setXSafe(mouseX);
             setYSafe(mouseY);
@@ -120,16 +147,19 @@ public class Slider extends Button {
 
     public double getVal() {
         if (horizontal) {
-            return map(getX(), getMinX(), getMaxX(), min, max);// min + ((max - min) / (getMaxX() - getMinX())) *
-                                                               // (getX() - getMinX());
+            lastVal = map(getX(), getMinX(), getMaxX(), min, max);// min + ((max - min) / (getMaxX() - getMinX())) *
+                                                                  // (getX() - getMinX());
+            return lastVal;
         } else if (vertical) {
-            return map(getY(), getMinY(), getMaxY(), min, max);// min + ((max - min) / (getMaxY() - getMinY())) *
-                                                               // (getY() - getMinY());
+            lastVal = map(getY(), getMinY(), getMaxY(), min, max);// min + ((max - min) / (getMaxY() - getMinY())) *
+                                                                  // (getY() - getMinY());
+            return lastVal;
         }
         return 0.0;
     }
 
     public void setVal(double val) {
+        lastVal = val;
         if (horizontal) {
             setXSafe(map(val, min, max, getMinX(), getMaxX()));
         } else if (vertical) {
@@ -159,6 +189,18 @@ public class Slider extends Button {
             }
         }
         return new Shape(0, 0, 0, 0, delay);
+    }
+
+    // to override
+    public void setValue() {
+    }
+
+    public void run(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed, String type,
+            Mouse m) {
+        slide(g, unpressed, pressed, filled, filledPressed, type, m.getX(), m.getY(), m.getXClicked(), m.getYClicked(),
+                m.getIsPressed(), m.getOccupied());
+        setValue();
+
     }
 
 }

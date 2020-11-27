@@ -17,6 +17,10 @@ public class Button extends Shape {
         super(x, y, w, h, t, d);
     }
 
+    public Button(Button b) {
+        this(b.getX(), b.getY(), b.getW(), b.getH(), b.getTypeFull(), b.delay);
+    }
+
     protected boolean isPressed(double x, double y, double xOrig, double yOrig, boolean pressed, Button occupied) {
         mouseX = x;
         mouseY = y;
@@ -63,11 +67,22 @@ public class Button extends Shape {
 
     protected void drawState(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed,
             String type, double mX, double mY, double xOrig, double yOrig, boolean isPressed, Button occupied) {
+
         if (isPressed(mX, mY, xOrig, yOrig, isPressed, occupied)) {// !this.isPressed(mX, mY)) {
             draw(g, pressed, filled, type);
         } else {
             draw(g, unpressed, filledPressed, type);
         }
+    }
+
+    public void run(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed, String type,
+            Mouse m) {
+        if (wasIn && !isPressed(m.getX(), m.getY(), m.getXClicked(), m.getYClicked(), m.getIsPressed(),
+                m.getOccupied())) {
+            doAction();
+        }
+        drawState(g, unpressed, pressed, filled, filledPressed, type, m.getX(), m.getY(), m.getXClicked(),
+                m.getYClicked(), m.getIsPressed(), m.getOccupied());
     }
 
     public boolean isClear() {
@@ -82,7 +97,8 @@ public class Button extends Shape {
         return this;
     }
 
+    // to override
     public void doAction() {
-        System.out.println("button was pressed");
+
     }
 }

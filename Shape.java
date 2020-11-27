@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Shape extends Drawer {
-    private double w, h;
+    protected double w, h;
     // int delay = 10;// Main.timerSpeed;
 
     public Shape(double newX, double newY, double newW, double newH, double P, double I, double D, int d) {

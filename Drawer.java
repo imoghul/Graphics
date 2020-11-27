@@ -68,6 +68,13 @@ public class Drawer {
         return y;
     }
 
+    public String getTypeFull() {
+        if (type != null) {
+            return type;
+        }
+        return "";
+    }
+
     public String getType() {
         if (type != null && type.split(" ").length >= 1) {
             return type.split(" ")[0];

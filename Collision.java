@@ -4,7 +4,7 @@ public class Collision {
 
     public int displayW = 0, displayH;
 
-    public boolean rectCollide(Area one, Area two) {
+    public boolean rectCollide(Shape one, Shape two) {
         double x = 0, x2 = 0, y = 0, y2 = 0, w = 0, w2 = 0, h = 0, h2 = 0;
         if (one.getSubType().equals("normal")) {
             x = one.getX();
@@ -32,7 +32,7 @@ public class Collision {
         return (((x2 + w2 >= x) && (x2 <= x + w)) && ((y2 <= y + h) && (y2 + h2 >= y)));
     }
 
-    public boolean ovalCollide(Area one, Area two) {
+    public boolean ovalCollide(Shape one, Shape two) {
         // check if (xcoor,ycoor) is in elipse with (x,y)center and width,w and height,h
         // (Math.pow(((xcoor-x)/(w/2)),2) + Math.pow((ycoor-y)/(h/2),2))<=1
 
@@ -47,12 +47,12 @@ public class Collision {
         return false;
     }
 
-    private double plugOval(double xcoor, double ycoor, Area oval) {
+    private double plugOval(double xcoor, double ycoor, Shape oval) {
         double x = oval.getX(), y = oval.getY(), w = oval.getW(), h = oval.getH();
         return (Math.pow(((xcoor - x) / (w / 2)), 2) + Math.pow((ycoor - y) / (h / 2), 2));
     }
 
-    public boolean ovalCollideSmart(Area one, Area two) {
+    public boolean ovalCollideSmart(Shape one, Shape two) {
         double d = Math.sqrt(Math.pow(one.getX() - two.getX(), 2) + Math.pow(one.getY() - two.getY(), 2));
         double a1 = one.getW() / 2, b1 = one.getH() / 2, a2 = two.getW() / 2, b2 = two.getH() / 2;
         double theta2 = Math.atan2(one.getY() - two.getY(), one.getX() - two.getX());
@@ -62,14 +62,14 @@ public class Collision {
         return (d < (r1 + r2));
     }
 
-    public boolean pointInOval(double xcoor, double ycoor, Area oval) {
+    public boolean pointInOval(double xcoor, double ycoor, Shape oval) {
         double x = oval.getX(), y = oval.getY(), w = oval.getW(), h = oval.getH();
         return (Math.pow(((xcoor - x) / (w / 2)), 2) + Math.pow((ycoor - y) / (h / 2), 2)) <= 1;// (Math.pow(((xcoor-oval.getX())/(ovall.getW()/2)),2)
                                                                                                 // +
                                                                                                 // Math.pow((ycoor-oval.getY())/(oval.getH()/2),2))<=1;
     }
 
-    public boolean pointInRect(double xcoor, double ycoor, Area rect) {
+    public boolean pointInRect(double xcoor, double ycoor, Shape rect) {
         // double x2 = rect.getX(), y2 = rect.getY(), w2 = rect.getW(), h2 =
         // rect.getH();
         double x2 = 0, y2 = 0, w2 = 0, h2 = 0;
@@ -87,7 +87,7 @@ public class Collision {
         return ((xcoor >= x2) && (xcoor <= (x2 + w2)) && (ycoor >= y2) && (ycoor <= (y2 + h2)));
     }
 
-    public boolean ovalRectCollide(Area oval, Area rect) {
+    public boolean ovalRectCollide(Shape oval, Shape rect) {
         for (int xcoor = 0; xcoor < displayW; xcoor++) {
             for (int ycoor = 0; ycoor < displayH; ycoor++) {
                 if (pointInOval(xcoor, ycoor, oval) && pointInRect(xcoor, ycoor, rect)) {
@@ -98,7 +98,7 @@ public class Collision {
         return false;
     }
 
-    public boolean ovalRectCollideSmart(Area oval, Area rect) {
+    public boolean ovalRectCollideSmart(Shape oval, Shape rect) {
         // double d = Math.sqrt(Math.pow(oval.getX() - rect.getX(), 2) +
         // Math.pow(oval.getY() - rect.getY(), 2));
         // double a1 = oval.getW() / 2, b1 = oval.getH() / 2, a2 = rect.getW() / 2, b2 =
@@ -115,7 +115,7 @@ public class Collision {
         return false;
     }
 
-    public boolean autoIsIn(double x, double y, Area one) {
+    public boolean autoIsIn(double x, double y, Shape one) {
         if (one.getType().equals("rect")) {
             return pointInRect(x, y, one);
         } else if (one.getType().equals("oval")) {
@@ -124,7 +124,7 @@ public class Collision {
         return false;
     }
 
-    public boolean autoCollide(Area one, Area two) {
+    public boolean autoCollide(Shape one, Shape two) {
         if (one.getType().equals("rect") && two.getType().equals("rect")) {
             // System.out.println("rect and rect");
             return rectCollide(one, two);

@@ -1,6 +1,6 @@
 package Graphics;
 
-import Graphics.Area;
+import Graphics.Shape;
 import Graphics.Button;
 
 public class Mouse {

@@ -8,200 +8,111 @@ import java.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Shape {
+public class Shape extends Drawer {
+    private double w, h;
+    // int delay = 10;// Main.timerSpeed;
 
-    protected double x, y;
-    protected String type;// "type subType subsubType ...", ex: "rect centered rounded"
-    protected double minX = Double.MIN_VALUE;
-    protected double minY = Double.MIN_VALUE;
-    protected double maxX = Double.MAX_VALUE;
-    protected double maxY = Double.MAX_VALUE;
-
-    public PIDController xcontroller;
-    public PIDController ycontroller;
-    int delay = 10;// Main.timerSpeed;
-
-    public Shape(double newX, double newY, double P, double I, double D) {
-        x = newX;
-        y = newY;
-        xcontroller = new PIDController(P, I, D, (double) delay / 1000.0);
-        ycontroller = new PIDController(P, I, D, (double) delay / 1000.0);
+    public Shape(double newX, double newY, double newW, double newH, double P, double I, double D) {
+        super(newX, newY, P, I, D);
+        w = newW;
+        h = newH;
     }
 
     public Shape(Shape newOne) {
-        x = newOne.getX();
-        y = newOne.getY();
-        type = newOne.getType();
-        minX = newOne.getMinX();
-        maxX = newOne.getMaxX();
-        minY = newOne.getMinY();
-        maxY = newOne.getMaxY();
-        xcontroller = newOne.xcontroller;
-        ycontroller = newOne.ycontroller;
+        super(newOne);
+        w = newOne.getW();
+        h = newOne.getH();
         // this.delay = newOne.delay;
     }
 
-    public Shape(double newX, double newY) {
-        x = newX;
-        y = newY;
+    public Shape(double newX, double newY, double newW, double newH) {
+        super(newX, newY);
+        w = newW;
+        h = newH;
     }
 
-    public Shape(double newX, double newY, String t) {
-        this(newX, newY);
+    public Shape(double newX, double newY, double newW, double newH, String t) {
+        this(newX, newY, newW, newH);
         type = t;
     }
 
-    public Shape(double newX, double newY, double P, double I, double D, String t) {
-        this(newX, newY, P, I, D);
+    public Shape(double newX, double newY, double newW, double newH, double P, double I, double D, String t) {
+        this(newX, newY, newW, newH, P, I, D);
         type = t;
     }
 
-    public double getX() {
-        return x;
+    public double getW() {
+        return w;
     }
 
-    public double getY() {
-        return y;
+    public double getH() {
+        return h;
     }
 
-    public String getType() {
-        if (type != null && type.split(" ").length >= 1) {
-            return type.split(" ")[0];
-        }
-        return "";
+    public void setW(double newW) {
+        w = newW;
     }
 
-    public String getSubType() {
-        if (type != null && type.split(" ").length > 1) {
-            return type.split(" ")[1];
-        } else if (type != null && !(type.split(" ").length > 1)) {
-            return "normal";
-        }
-        return "";
+    public void setH(double newH) {
+        h = newH;
     }
 
-    public double getMinX() {
-        return minX;
+    public void incrementW(double i) {
+        w += i;
     }
 
-    public double getMaxX() {
-        return maxX;
+    public void incrementH(double i) {
+        h += i;
     }
 
-    public double getMinY() {
-        return minY;
-    }
-
-    public double getMaxY() {
-        return maxY;
-    }
-
-    public void setMaxX(double newx) {
-        maxX = newx;
-    }
-
-    public void setMinX(double newx) {
-        minX = newx;
-    }
-
-    public void setMaxY(double newy) {
-        maxY = newy;
-    }
-
-    public void setMinY(double newy) {
-        minY = newy;
-    }
-
-    public void setX(double newX) {
-
-        x = newX; // - getW(); // -getW/2 if top corner is needed
-
-    }
-
-    public void setY(double newY) {
-
-        y = newY; // - getH(); // -getH/2 if top corner is needed
-
-    }
-
-    public void setXSafe(double newX) {
-        if (newX >= minX && newX <= maxX) {
-            x = newX; // - getW(); // -getW/2 if top corner is needed
-        } else if (newX <= minX) {
-            x = minX;
-        } else if (newX > maxX) {
-            x = maxX;
-        }
-    }
-
-    public void setYSafe(double newY) {
-        if (newY >= minY && newY <= maxY) {
-            y = newY; // - getH(); // -getH/2 if top corner is needed
-        } else if (newY <= minY) {
-            y = minY;
-        } else if (newY > maxY) {
-            y = maxY;
-        }
-    }
-
-    public void updateControllers(double p, double i, double d) {
-        xcontroller.setP(p);
-        xcontroller.setI(i);
-        xcontroller.setD(d);
-        ycontroller.setP(p);
-        ycontroller.setI(i);
-        ycontroller.setD(d);
-    }
-
-    public boolean setXPID(double desired) {
-        double actual = getX();
-        if (Math.abs(actual - desired) > 0.01) {
-            actual = xcontroller.PIDout(actual, desired);
-            setX(actual);
-            try {
-                Thread.sleep(delay);
-            } catch (InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
-            return false;
+    public void rect(Graphics g, Color c, boolean filled) {
+        type = "rect normal";
+        g.setColor(c);
+        if (filled) {
+            g.fillRect((int) getX(), (int) getY(), (int) getW(), (int) getH());
         } else {
-            xcontroller.reset();
-            return true;
+            g.drawRect((int) getX(), (int) getY(), (int) getW(), (int) getH());// g.drawRect(getX(), getY(), getW(),
+                                                                               // getH());
         }
     }
 
-    public boolean setYPID(double desired) {
-        double actual = getY();
-        if (Math.abs(actual - desired) > 0.01) {
-            actual = ycontroller.PIDout(actual, desired);
-            setY(actual);
-            try {
-                Thread.sleep(delay);
-            } catch (InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
-            return false;
+    public void rectCentered(Graphics g, Color c, boolean filled) {
+        type = "rect centered";
+        g.setColor(c);
+        if (filled) {
+            g.fillRect((int) (getX() - w / 2.0), (int) (getY() - h / 2.0), (int) getW(), (int) getH());
         } else {
-            ycontroller.reset();
-            return true;
+            g.drawRect((int) (getX() - w / 2.0), (int) (getY() - h / 2.0), (int) getW(), (int) getH());
         }
     }
 
-    public void incrementX(double i) {
-        setX(getX() + i);
+    public void oval(Graphics g, Color c, boolean filled) {
+        type = "oval";
+        g.setColor(c);
+        if (filled) {
+            g.fillOval((int) getX() - (int) (getW() / 2.0), (int) getY() - (int) (getH() / 2.0), (int) getW(),
+                    (int) getH());
+        } else {
+            g.drawOval((int) getX() - (int) (getW() / 2.0), (int) getY() - (int) (getH() / 2.0), (int) getW(),
+                    (int) getH());
+        }
     }
 
-    public void incrementY(double i) {
-        setY(getY() + i);
+    public void draw(Graphics g, Color c, boolean filled, String t) {
+        type = t;
+        draw(g, c, filled);
     }
 
-    public void clear(Graphics g) {
-        g.setColor(Color.black);
-        // g.drawRect(1, 1, 1, 1);
-    }
-
-    public boolean isClear() {
-        return getType().equals("clear");
+    public void draw(Graphics g, Color c, boolean filled) {
+        if (getType().equals("rect")) {
+            if (getSubType().equals("normal")) {
+                rect(g, c, filled);
+            } else if (getSubType().equals("centered")) {
+                rectCentered(g, c, filled);
+            }
+        } else if (getType().equals("oval")) {
+            oval(g, c, filled);
+        }
     }
 
 }

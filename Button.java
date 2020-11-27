@@ -9,12 +9,12 @@ public class Button extends Shape {
     boolean beganIn = false;
     private double mouseX, mouseY;
 
-    public Button(double x, double y, double w, double h) {
-        super(x, y, w, h);
+    public Button(double x, double y, double w, double h, int d) {
+        super(x, y, w, h, d);
     }
 
-    public Button(double x, double y, double w, double h, String t) {
-        super(x, y, w, h, t);
+    public Button(double x, double y, double w, double h, String t, int d) {
+        super(x, y, w, h, t, d);
     }
 
     protected boolean isPressed(double x, double y, double xOrig, double yOrig, boolean pressed, Button occupied) {

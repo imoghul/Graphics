@@ -12,8 +12,8 @@ public class Shape extends Drawer {
     private double w, h;
     // int delay = 10;// Main.timerSpeed;
 
-    public Shape(double newX, double newY, double newW, double newH, double P, double I, double D) {
-        super(newX, newY, P, I, D);
+    public Shape(double newX, double newY, double newW, double newH, double P, double I, double D, int d) {
+        super(newX, newY, P, I, D, d);
         w = newW;
         h = newH;
     }
@@ -25,19 +25,19 @@ public class Shape extends Drawer {
         // this.delay = newOne.delay;
     }
 
-    public Shape(double newX, double newY, double newW, double newH) {
-        super(newX, newY);
+    public Shape(double newX, double newY, double newW, double newH, int d) {
+        super(newX, newY, d);
         w = newW;
         h = newH;
     }
 
-    public Shape(double newX, double newY, double newW, double newH, String t) {
-        this(newX, newY, newW, newH);
+    public Shape(double newX, double newY, double newW, double newH, String t, int d) {
+        this(newX, newY, newW, newH, d);
         type = t;
     }
 
-    public Shape(double newX, double newY, double newW, double newH, double P, double I, double D, String t) {
-        this(newX, newY, newW, newH, P, I, D);
+    public Shape(double newX, double newY, double newW, double newH, double P, double I, double D, String t, int d) {
+        this(newX, newY, newW, newH, P, I, D, d);
         type = t;
     }
 

@@ -10,23 +10,23 @@ public class Text extends Drawer {
     FontRenderContext context;
     double w, h;
 
-    public Text(String text, double newX, double newY, double P, double I, double D) {
-        super(newX, newY, P, I, D);
+    public Text(String text, double newX, double newY, double P, double I, double D, int d) {
+        super(newX, newY, P, I, D, d);
         this.text = text;
     }
 
-    public Text(String text, double newX, double newY, String t) {
-        super(newX, newY, t);
+    public Text(String text, double newX, double newY, String t, int d) {
+        super(newX, newY, t, d);
         this.text = text;
     }
 
-    public Text(String text, double newX, double newY) {
-        super(newX, newY);
+    public Text(String text, double newX, double newY, int d) {
+        super(newX, newY, d);
         this.text = text;
     }
 
-    public Text(String text, double newX, double newY, double P, double I, double D, String t) {
-        super(newX, newY, P, I, D, t);
+    public Text(String text, double newX, double newY, double P, double I, double D, String t, int d) {
+        super(newX, newY, P, I, D, t, d);
         this.text = text;
     }
 
@@ -54,11 +54,11 @@ public class Text extends Drawer {
 
     public Shape getBoudingBox(Graphics g) {
         setDimensions(g);
-        return new Shape(x, y, w, h, "rect " + getSubType());
+        return new Shape(x, y, w, h, "rect " + getSubType(), delay);
     }
 
     public Shape getBoudingBox() {
-        return new Shape(x, y, w, h, "rect " + getSubType());
+        return new Shape(x, y, w, h, "rect " + getSubType(), delay);
     }
 
     public String getText() {

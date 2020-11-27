@@ -6,7 +6,12 @@ import Graphics.Button;
 public class Mouse {
     private double x = 0, y = 0, xBeforeClicked = 0, yBeforeClicked = 0;
     private boolean isPressed = false;
-    private Button occupiedRegion = new Button(0, 0, 0, 0, "clear");
+    private Button occupiedRegion = new Button(0, 0, 0, 0, "clear", 0);
+    private int delay;
+
+    public Mouse(int d) {
+        delay = d;
+    }
 
     public void setX(double newX) {
         x = newX;
@@ -66,6 +71,6 @@ public class Mouse {
     }
 
     public void clear() {
-        setOccupied(new Button(0, 0, 0, 0, "clear"));
+        setOccupied(new Button(0, 0, 0, 0, "clear", delay));
     }
 }

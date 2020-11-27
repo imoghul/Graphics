@@ -44,6 +44,8 @@ public class Drawer {
     public Drawer(double newX, double newY) {
         x = newX;
         y = newY;
+        xcontroller = new PIDController(1, 0, 0, (double) delay / 1000.0);
+        ycontroller = new PIDController(1, 0, 0, (double) delay / 1000.0);
     }
 
     public Drawer(double newX, double newY, String t) {

@@ -36,6 +36,8 @@ public class Button extends Area {
             } else {
                 return false;
             }
+            // or just return true, but for some reason I spent a long time on this so leave
+            // it;
         } else {
             wasIn = false;
             return false;

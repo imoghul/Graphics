@@ -3,7 +3,7 @@ package Graphics;
 import Graphics.Mouse;
 import java.awt.*;
 
-public class Button extends Area {
+public class Button extends Shape {
     Collision checker = new Collision();
     boolean wasIn = false;
     boolean beganIn = false;
@@ -36,6 +36,8 @@ public class Button extends Area {
             } else {
                 return false;
             }
+            // or just return true, but for some reason I spent a long time on this so leave
+            // it;
         } else {
             wasIn = false;
             return false;
@@ -72,11 +74,11 @@ public class Button extends Area {
         return getType().equals("clear");// && getX() == 0 && getY() == 0 && getW() == 0 && getH() == 0;
     }
 
-    public Area getMidBar() {
+    public Shape getMidBar() {
         return this;
     }
 
-    public Area getBoundingBox() {
+    public Shape getBoundingBox() {
         return this;
     }
 

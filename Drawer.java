@@ -8,33 +8,29 @@ import java.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Area {
+public class Drawer {
 
-    private double x, y, w, h;
-    private String type;// "type subType subsubType ..."
-    private double minX = Double.MIN_VALUE;
-    private double minY = Double.MIN_VALUE;
-    private double maxX = Double.MAX_VALUE;
-    private double maxY = Double.MAX_VALUE;
+    protected double x, y;
+    protected String type;// "type subType subsubType ...", ex: "rect centered rounded"
+    protected double minX = Double.MIN_VALUE;
+    protected double minY = Double.MIN_VALUE;
+    protected double maxX = Double.MAX_VALUE;
+    protected double maxY = Double.MAX_VALUE;
 
     public PIDController xcontroller;
     public PIDController ycontroller;
     int delay = 10;// Main.timerSpeed;
 
-    public Area(double newX, double newY, double newW, double newH, double P, double I, double D) {
+    public Drawer(double newX, double newY, double P, double I, double D) {
         x = newX;
         y = newY;
-        w = newW;
-        h = newH;
         xcontroller = new PIDController(P, I, D, (double) delay / 1000.0);
         ycontroller = new PIDController(P, I, D, (double) delay / 1000.0);
     }
 
-    public Area(Area newOne) {
+    public Drawer(Drawer newOne) {
         x = newOne.getX();
         y = newOne.getY();
-        w = newOne.getW();
-        h = newOne.getH();
         type = newOne.getType();
         minX = newOne.getMinX();
         maxX = newOne.getMaxX();
@@ -42,23 +38,23 @@ public class Area {
         maxY = newOne.getMaxY();
         xcontroller = newOne.xcontroller;
         ycontroller = newOne.ycontroller;
-        delay = newOne.delay;
+        // this.delay = newOne.delay;
     }
 
-    public Area(double newX, double newY, double newW, double newH) {
+    public Drawer(double newX, double newY) {
         x = newX;
         y = newY;
-        w = newW;
-        h = newH;
+        xcontroller = new PIDController(1, 0, 0, (double) delay / 1000.0);
+        ycontroller = new PIDController(1, 0, 0, (double) delay / 1000.0);
     }
 
-    public Area(double newX, double newY, double newW, double newH, String t) {
-        this(newX, newY, newW, newH);
+    public Drawer(double newX, double newY, String t) {
+        this(newX, newY);
         type = t;
     }
 
-    public Area(double newX, double newY, double newW, double newH, double P, double I, double D, String t) {
-        this(newX, newY, newW, newH, P, I, D);
+    public Drawer(double newX, double newY, double P, double I, double D, String t) {
+        this(newX, newY, P, I, D);
         type = t;
     }
 
@@ -68,14 +64,6 @@ public class Area {
 
     public double getY() {
         return y;
-    }
-
-    public double getW() {
-        return w;
-    }
-
-    public double getH() {
-        return h;
     }
 
     public String getType() {
@@ -201,14 +189,6 @@ public class Area {
         }
     }
 
-    public void setW(double newW) {
-        w = newW;
-    }
-
-    public void setH(double newH) {
-        h = newH;
-    }
-
     public void incrementX(double i) {
         setX(getX() + i);
     }
@@ -217,87 +197,13 @@ public class Area {
         setY(getY() + i);
     }
 
-    public void incrementW(double i) {
-        w += i;
-    }
-
-    public void incrementH(double i) {
-        h += i;
-    }
-
-    public void travelVector(int x, int y, int m) {
-        System.out.println((int) ((double) x / (double) gcd(x, y)) + ", " + (int) ((double) y / (double) gcd(x, y)));
-
-        incrementX((int) ((double) x / (double) gcd(x, y)));
-        incrementY((int) ((double) y / (double) gcd(x, y)));
-    }
-
-    public void rect(Graphics g, Color c, boolean filled) {
-        type = "rect normal";
-        g.setColor(c);
-        if (filled) {
-            g.fillRect((int) getX(), (int) getY(), (int) getW(), (int) getH());
-        } else {
-            g.drawRect((int) getX(), (int) getY(), (int) getW(), (int) getH());// g.drawRect(getX(), getY(), getW(),
-                                                                               // getH());
-        }
-    }
-
-    public void rectCentered(Graphics g, Color c, boolean filled) {
-        type = "rect centered";
-        g.setColor(c);
-        if (filled) {
-            g.fillRect((int) (getX() - w / 2.0), (int) (getY() - h / 2.0), (int) getW(), (int) getH());
-        } else {
-            g.drawRect((int) (getX() - w / 2.0), (int) (getY() - h / 2.0), (int) getW(), (int) getH());
-        }
-    }
-
     public void clear(Graphics g) {
         g.setColor(Color.black);
         // g.drawRect(1, 1, 1, 1);
     }
 
-    public void oval(Graphics g, Color c, boolean filled) {
-        type = "oval";
-        g.setColor(c);
-        if (filled) {
-            g.fillOval((int) getX() - (int) (getW() / 2.0), (int) getY() - (int) (getH() / 2.0), (int) getW(),
-                    (int) getH());
-        } else {
-            g.drawOval((int) getX() - (int) (getW() / 2.0), (int) getY() - (int) (getH() / 2.0), (int) getW(),
-                    (int) getH());
-        }
+    public boolean isClear() {
+        return getType().equals("clear");
     }
-
-    public void draw(Graphics g, Color c, boolean filled, String t) {
-        type = t;
-        draw(g, c, filled);
-    }
-
-    public void draw(Graphics g, Color c, boolean filled) {
-        if (getType().equals("rect")) {
-            if (getSubType().equals("normal")) {
-                rect(g, c, filled);
-            } else if (getSubType().equals("centered")) {
-                rectCentered(g, c, filled);
-            }
-        } else if (getType().equals("oval")) {
-            oval(g, c, filled);
-        }
-    }
-
-    private static int gcd(int a, int b) {
-        if (b == 0) {
-            return a;
-        }
-        return gcd(b, a % b);
-
-    }
-
-    // public boolean isClear() {
-    // return getType().equals("clear");// && getX() == 0 && getY() == 0 && getW()
-    // == 0 && getH() == 0;
-    // }
 
 }

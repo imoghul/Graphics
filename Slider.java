@@ -191,15 +191,15 @@ public class Slider extends Button {
         return new Shape(0, 0, 0, 0, delay);
     }
 
-    // to override
-    public void setValue() {
+    // to override, does this every iteration run is called
+    public void doAction() {
     }
 
     public void run(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed, String type,
             Mouse m) {
         slide(g, unpressed, pressed, filled, filledPressed, type, m.getX(), m.getY(), m.getXClicked(), m.getYClicked(),
                 m.getIsPressed(), m.getOccupied());
-        setValue();
+        doAction();
 
     }
 

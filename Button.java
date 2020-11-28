@@ -97,7 +97,7 @@ public class Button extends Shape {
         return this;
     }
 
-    // to override
+    // to override, does this every time run is called and it is pressed
     public void doAction() {
 
     }

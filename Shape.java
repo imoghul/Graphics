@@ -49,6 +49,46 @@ public class Shape extends Drawer {
         return h;
     }
 
+    public double getCenterX() {
+        if (getType().equals("rect")) {
+            if (getSubType().equals("normal")) {
+                return x + (getW() / 2);
+            } else if (getSubType().equals("centered")) {
+                return x;
+            }
+
+        } else if (getType().equals("oval")) {
+            return x;
+        } else if (getType().equals("text")) {
+            if (getSubType().equals("normal")) {
+                return x + (getW() / 2);
+            } else if (getSubType().equals("centered")) {
+                return x;
+            }
+        }
+        return 0;
+    }
+
+    public double getCenterY() {
+        if (getType().equals("rect")) {
+            if (getSubType().equals("normal")) {
+                return y + (getH() / 2);
+            } else if (getSubType().equals("normal")) {
+                return y;
+            }
+
+        } else if (getType().equals("oval")) {
+            return y;
+        } else if (getType().equals("text")) {
+            if (getSubType().equals("normal")) {
+                return y + (getH() / 2);
+            } else if (getSubType().equals("normal")) {
+                return y;
+            }
+        }
+        return 0;
+    }
+
     public void setW(double newW) {
         w = newW;
     }

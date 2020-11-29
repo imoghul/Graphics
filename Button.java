@@ -1,6 +1,7 @@
 package Graphics;
 
 import Graphics.Mouse;
+import Graphics.Text;
 import java.awt.*;
 
 public class Button extends Shape {
@@ -8,6 +9,7 @@ public class Button extends Shape {
     boolean wasIn = false;
     boolean beganIn = false;
     private double mouseX, mouseY;
+    public Text label;
 
     public Button(double x, double y, double w, double h, int d) {
         super(x, y, w, h, d);
@@ -73,6 +75,11 @@ public class Button extends Shape {
         } else {
             draw(g, unpressed, filledPressed, type);
         }
+        if (!(label == null)) {
+            label.setX(this.getCenterX());
+            label.setY(this.getCenterY());
+            label.drawCentered(g, Color.white);
+        }
     }
 
     public void run(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed, String type,
@@ -95,6 +102,10 @@ public class Button extends Shape {
 
     public Shape getBoundingBox() {
         return this;
+    }
+
+    public void setLabel(String s) {
+        this.label = new Text(s, this.getCenterX(), this.getCenterY(), this.delay);
     }
 
     // to override, does this every time run is called and it is pressed

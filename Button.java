@@ -87,8 +87,8 @@ public class Button extends Shape {
 
     public void run(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed, String type,
             Mouse m) {
-        if (wasIn && !isPressed(m.getX(), m.getY(), m.getXClicked(), m.getYClicked(), m.getIsPressed(),
-                m.getOccupied())) {
+        if (wasIn && !isPressed(m.getX(), m.getY(), m.getXClicked(), m.getYClicked(), m.getIsPressed(), m.getOccupied())
+                && isIn(m.getX(), m.getY())) {
             doAction();
         }
         update();

@@ -64,6 +64,7 @@ public class Text extends Drawer {
     }
 
     public Shape getBoudingBox() {
+        setDimensions();
         return new Shape(x, y, w, h, "rect " + getSubType(), delay);
     }
 
@@ -86,6 +87,7 @@ public class Text extends Drawer {
     public void draw(Graphics g, Color c) {
         type = "text normal";
         g.setColor(c);
+        g.setFont(font);
         setDimensions(g);
         g.drawString(text, (int) getX(), (int) (getY() + w));
     }
@@ -93,6 +95,7 @@ public class Text extends Drawer {
     public void draw(Graphics g) {
         type = "text normal";
         g.setColor(c);
+        g.setFont(font);
         setDimensions(g);
         g.drawString(text, (int) getX(), (int) (getY() + w));
     }
@@ -100,6 +103,7 @@ public class Text extends Drawer {
     public void drawCentered(Graphics g, Color c) {
         type = "text centered";
         g.setColor(c);
+        g.setFont(font);
         setDimensions(g);
         g.drawString(text, (int) (getX() - w / 2), (int) (getY() + h / 2));
     }
@@ -107,14 +111,20 @@ public class Text extends Drawer {
     public void drawCentered(Graphics g) {
         type = "text centered";
         g.setColor(c);
+        g.setFont(font);
         setDimensions(g);
         g.drawString(text, (int) (getX() - w / 2), (int) (getY() + h / 2));
     }
 
     public void draw(Graphics g, Color c, Font f) {
         g.setColor(c);
+        g.setFont(font);
         setDimensions(f);
         g.drawString(text, (int) (getX() - w / 2), (int) (getY() + h / 2));
+    }
+
+    public void setFont(Font f) {
+        font = f;
     }
 
 }

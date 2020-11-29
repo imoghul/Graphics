@@ -1,9 +1,0 @@
-package Graphics;
-
-import Graphics.Slider;
-
-public interface ButtonImplementation {
-    public void doAction();
-
-    public void update();
-}

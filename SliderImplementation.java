@@ -2,8 +2,15 @@ package Graphics;
 
 import Graphics.Slider;
 
-public interface SliderImplementation {
-    public void doAction();
+public abstract class SliderImplementation extends Slider {
 
-    public void update();
+    public SliderImplementation(Slider s) {
+        super(s);
+    }
+
+    @Override
+    public abstract void doAction();
+
+    @Override
+    public abstract void update();
 }

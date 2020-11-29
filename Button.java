@@ -91,6 +91,7 @@ public class Button extends Shape {
                 m.getOccupied())) {
             doAction();
         }
+        update();
         drawState(g, unpressed, pressed, filled, filledPressed, type, m.getX(), m.getY(), m.getXClicked(),
                 m.getYClicked(), m.getIsPressed(), m.getOccupied());
     }
@@ -113,6 +114,11 @@ public class Button extends Shape {
 
     // to override, does this every time run is called and it is pressed
     public void doAction() {
+
+    }
+
+    // to override, does this every time run is called
+    public void update() {
 
     }
 }

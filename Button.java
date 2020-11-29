@@ -1,6 +1,7 @@
 package Graphics;
 
 import Graphics.Mouse;
+import Graphics.Text;
 import java.awt.*;
 
 public class Button extends Shape {
@@ -8,6 +9,7 @@ public class Button extends Shape {
     boolean wasIn = false;
     boolean beganIn = false;
     private double mouseX, mouseY;
+    public Text label;
 
     public Button(double x, double y, double w, double h, int d) {
         super(x, y, w, h, d);
@@ -15,6 +17,10 @@ public class Button extends Shape {
 
     public Button(double x, double y, double w, double h, String t, int d) {
         super(x, y, w, h, t, d);
+    }
+
+    public Button(Button b) {
+        this(b.getX(), b.getY(), b.getW(), b.getH(), b.getTypeFull(), b.delay);
     }
 
     protected boolean isPressed(double x, double y, double xOrig, double yOrig, boolean pressed, Button occupied) {
@@ -49,10 +55,9 @@ public class Button extends Shape {
     }
 
     private boolean isIn(double x, double y) {
-        return checker.autoIsIn(x, y, this) || checker.autoIsIn(x, y, getBoundingBox());// checker.autoIsIn(x, y, this)
-                                                                                        // ||
-        // checker.autoIsIn(x, y,
-        // getMidBar());
+        return checker.autoIsIn(x, y, this) || checker.autoIsIn(x, y, getBoundingBox())
+                || checker.autoIsIn(x, y, getMidBar());
+        // checker.autoIsIn(x, y, this) || checker.autoIsIn(x, y,getMidBar());
     }
 
     public void drawState(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed,
@@ -63,11 +68,31 @@ public class Button extends Shape {
 
     protected void drawState(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed,
             String type, double mX, double mY, double xOrig, double yOrig, boolean isPressed, Button occupied) {
+
         if (isPressed(mX, mY, xOrig, yOrig, isPressed, occupied)) {// !this.isPressed(mX, mY)) {
             draw(g, pressed, filled, type);
         } else {
             draw(g, unpressed, filledPressed, type);
         }
+        if (!(label == null)) {
+            label.setX(this.getCenterX());
+            label.setY(this.getCenterY());
+            label.drawCentered(g);
+        }
+    }
+
+    public Text getLabel() {
+        return this.label;
+    }
+
+    public void run(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed, String type,
+            Mouse m) {
+        if (wasIn && !isPressed(m.getX(), m.getY(), m.getXClicked(), m.getYClicked(), m.getIsPressed(),
+                m.getOccupied())) {
+            doAction();
+        }
+        drawState(g, unpressed, pressed, filled, filledPressed, type, m.getX(), m.getY(), m.getXClicked(),
+                m.getYClicked(), m.getIsPressed(), m.getOccupied());
     }
 
     public boolean isClear() {
@@ -82,7 +107,12 @@ public class Button extends Shape {
         return this;
     }
 
+    public void setLabel(String s) {
+        this.label = new Text(s, this.getCenterX(), this.getCenterY(), this.delay);
+    }
+
+    // to override, does this every time run is called and it is pressed
     public void doAction() {
-        System.out.println("button was pressed");
+
     }
 }

@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Shape extends Drawer {
-    private double w, h;
+    protected double w, h;
     // int delay = 10;// Main.timerSpeed;
 
     public Shape(double newX, double newY, double newW, double newH, double P, double I, double D, int d) {
@@ -47,6 +47,46 @@ public class Shape extends Drawer {
 
     public double getH() {
         return h;
+    }
+
+    public double getCenterX() {
+        if (getType().equals("rect")) {
+            if (getSubType().equals("normal")) {
+                return x + (getW() / 2);
+            } else if (getSubType().equals("centered")) {
+                return x;
+            }
+
+        } else if (getType().equals("oval")) {
+            return x;
+        } else if (getType().equals("text")) {
+            if (getSubType().equals("normal")) {
+                return x + (getW() / 2);
+            } else if (getSubType().equals("centered")) {
+                return x;
+            }
+        }
+        return 0;
+    }
+
+    public double getCenterY() {
+        if (getType().equals("rect")) {
+            if (getSubType().equals("normal")) {
+                return y + (getH() / 2);
+            } else if (getSubType().equals("normal")) {
+                return y;
+            }
+
+        } else if (getType().equals("oval")) {
+            return y;
+        } else if (getType().equals("text")) {
+            if (getSubType().equals("normal")) {
+                return y + (getH() / 2);
+            } else if (getSubType().equals("normal")) {
+                return y;
+            }
+        }
+        return 0;
     }
 
     public void setW(double newW) {

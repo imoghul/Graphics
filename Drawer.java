@@ -16,7 +16,7 @@ public class Drawer {
     protected double minY = Double.MIN_VALUE;
     protected double maxX = Double.MAX_VALUE;
     protected double maxY = Double.MAX_VALUE;
-
+    protected Color c;
     public PIDController xcontroller;
     public PIDController ycontroller;
     public int delay = 20;// Main.timerSpeed;
@@ -60,12 +60,23 @@ public class Drawer {
         type = t;
     }
 
+    public void setColor(Color c) {
+        this.c = c;
+    }
+
     public double getX() {
         return x;
     }
 
     public double getY() {
         return y;
+    }
+
+    public String getTypeFull() {
+        if (type != null) {
+            return type;
+        }
+        return "";
     }
 
     public String getType() {

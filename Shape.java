@@ -73,7 +73,7 @@ public class Shape extends Drawer {
         if (getType().equals("rect")) {
             if (getSubType().equals("normal")) {
                 return y + (getH() / 2);
-            } else if (getSubType().equals("normal")) {
+            } else if (getSubType().equals("centered")) {
                 return y;
             }
 

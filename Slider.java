@@ -211,8 +211,14 @@ public class Slider extends Button {
     public void doAction() {
     }
 
+    // to override, does this every iteration run is called and should set the value
+    // of whatever this slider denotes
+    public void update() {
+    }
+
     public void run(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed, String type,
             Mouse m) {
+        update();
         slide(g, unpressed, pressed, filled, filledPressed, type, m.getX(), m.getY(), m.getXClicked(), m.getYClicked(),
                 m.getIsPressed(), m.getOccupied());
         doAction();

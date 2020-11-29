@@ -44,6 +44,27 @@ public class PIDController {
         return actual + P * (error) + I * integral + D * derivative;
     }
 
+    public boolean setPID(double desired) {
+        double actual = get();
+        if (Math.abs(actual - desired) > 0.01) {
+            set(PIDout(actual, desired));
+            return false;
+        } else {
+            reset();
+            return true;
+        }
+    }
+
+    // to override, sets the value
+    public void set(double val) {
+
+    }
+
+    // to override, gets the value
+    public double get() {
+        return 0.0;
+    }
+
     public boolean hasReached(double actual, double desired) {
         return Math.abs(actual - desired) <= 0.01;
     }

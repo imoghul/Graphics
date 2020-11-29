@@ -55,10 +55,9 @@ public class Button extends Shape {
     }
 
     private boolean isIn(double x, double y) {
-        return checker.autoIsIn(x, y, this) || checker.autoIsIn(x, y, getBoundingBox());// checker.autoIsIn(x, y, this)
-                                                                                        // ||
-        // checker.autoIsIn(x, y,
-        // getMidBar());
+        return checker.autoIsIn(x, y, this) || checker.autoIsIn(x, y, getBoundingBox())
+                || checker.autoIsIn(x, y, getMidBar());
+        // checker.autoIsIn(x, y, this) || checker.autoIsIn(x, y,getMidBar());
     }
 
     public void drawState(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed,
@@ -78,8 +77,12 @@ public class Button extends Shape {
         if (!(label == null)) {
             label.setX(this.getCenterX());
             label.setY(this.getCenterY());
-            label.drawCentered(g, Color.white);
+            label.drawCentered(g);
         }
+    }
+
+    public Text getLabel() {
+        return this.label;
     }
 
     public void run(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed, String type,

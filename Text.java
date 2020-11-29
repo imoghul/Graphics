@@ -5,10 +5,10 @@ import java.awt.geom.*;
 import java.awt.font.*;
 
 public class Text extends Drawer {
-    String text;
+    private String text;
     Font font;
     FontRenderContext context;
-    double w, h;
+    protected double w, h;
 
     public Text(String text, double newX, double newY, double P, double I, double D, int d) {
         super(newX, newY, P, I, D, d);
@@ -23,6 +23,12 @@ public class Text extends Drawer {
     public Text(String text, double newX, double newY, int d) {
         super(newX, newY, d);
         this.text = text;
+    }
+
+    public Text(String text, double newX, double newY, Color color, int d) {
+        super(newX, newY, d);
+        this.text = text;
+        c = color;
     }
 
     public Text(String text, double newX, double newY, double P, double I, double D, String t, int d) {
@@ -84,7 +90,21 @@ public class Text extends Drawer {
         g.drawString(text, (int) getX(), (int) (getY() + w));
     }
 
+    public void draw(Graphics g) {
+        type = "text normal";
+        g.setColor(c);
+        setDimensions(g);
+        g.drawString(text, (int) getX(), (int) (getY() + w));
+    }
+
     public void drawCentered(Graphics g, Color c) {
+        type = "text centered";
+        g.setColor(c);
+        setDimensions(g);
+        g.drawString(text, (int) (getX() - w / 2), (int) (getY() + h / 2));
+    }
+
+    public void drawCentered(Graphics g) {
         type = "text centered";
         g.setColor(c);
         setDimensions(g);

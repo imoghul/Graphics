@@ -1,7 +1,8 @@
 package Graphics;
 
 public class PIDController {
-    public double I, P, D, error, lastError = 0.0, lastIntegral = 0.0;
+    public double I, P, D;
+    private double error, lastError = 0.0, lastIntegral = 0.0;
 
     private double dT = .1;
 
@@ -44,8 +45,18 @@ public class PIDController {
         return actual + P * (error) + I * integral + D * derivative;
     }
 
+    public double PIDoutputVal(double actual, double desired) {
+        error = desired - actual;
+        double integral = lastIntegral + (error * dT);
+        double derivative = (error - lastError) / dT;
+        lastError = error;
+        lastIntegral = integral;
+        return P * (error) + I * integral + D * derivative;
+    }
+
     public boolean setPID(double desired) {
         double actual = get();
+
         if (Math.abs(actual - desired) > 0.01) {
             set(PIDout(actual, desired));
             return false;

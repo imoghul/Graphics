@@ -2,10 +2,11 @@ package Graphics;
 
 public class Collision {
 
-    public int displayW = 0, displayH;
+    public int displayW, displayH;
 
     public boolean rectCollide(Shape one, Shape two) {
         double x = 0, x2 = 0, y = 0, y2 = 0, w = 0, w2 = 0, h = 0, h2 = 0;
+
         if (one.getSubType().equals("normal")) {
             x = one.getX();
             y = one.getY();
@@ -17,6 +18,7 @@ public class Collision {
             w = one.getW();
             h = one.getH();
         }
+
         if (two.getSubType().equals("normal")) {
             x2 = two.getX();
             y2 = two.getY();
@@ -64,15 +66,14 @@ public class Collision {
 
     public boolean pointInOval(double xcoor, double ycoor, Shape oval) {
         double x = oval.getX(), y = oval.getY(), w = oval.getW(), h = oval.getH();
-        return (Math.pow(((xcoor - x) / (w / 2)), 2) + Math.pow((ycoor - y) / (h / 2), 2)) <= 1;// (Math.pow(((xcoor-oval.getX())/(ovall.getW()/2)),2)
-                                                                                                // +
-                                                                                                // Math.pow((ycoor-oval.getY())/(oval.getH()/2),2))<=1;
+        return (Math.pow(((xcoor - x) / (w / 2)), 2) + Math.pow((ycoor - y) / (h / 2), 2)) <= 1;
     }
 
     public boolean pointInRect(double xcoor, double ycoor, Shape rect) {
         // double x2 = rect.getX(), y2 = rect.getY(), w2 = rect.getW(), h2 =
         // rect.getH();
         double x2 = 0, y2 = 0, w2 = 0, h2 = 0;
+
         if (rect.getSubType().equals("normal")) {
             x2 = rect.getX();
             y2 = rect.getY();
@@ -84,6 +85,7 @@ public class Collision {
             w2 = rect.getW();
             h2 = rect.getH();
         }
+
         return ((xcoor >= x2) && (xcoor <= (x2 + w2)) && (ycoor >= y2) && (ycoor <= (y2 + h2)));
     }
 
@@ -95,6 +97,7 @@ public class Collision {
                 }
             }
         }
+
         return false;
     }
 
@@ -121,23 +124,21 @@ public class Collision {
         } else if (one.getType().equals("oval")) {
             return pointInOval(x, y, one);
         }
+
         return false;
     }
 
     public boolean autoCollide(Shape one, Shape two) {
         if (one.getType().equals("rect") && two.getType().equals("rect")) {
-            // System.out.println("rect and rect");
             return rectCollide(one, two);
         } else if (one.getType().equals("oval") && two.getType().equals("rect")) {
-            // System.out.println("oval and rect");
             return ovalRectCollide(one, two);
         } else if (one.getType().equals("rect") && two.getType().equals("oval")) {
-            // System.out.println("rect and oval");
             return ovalRectCollide(two, one);
         } else if (one.getType().equals("oval") && two.getType().equals("oval")) {
-            // System.out.println("oval and oval");
             return ovalCollideSmart(one, two);
         }
+
         return false;
     }
 }

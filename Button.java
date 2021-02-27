@@ -27,21 +27,26 @@ public class Button extends Shape {
         mouseX = x;
         mouseY = y;
         boolean justPressed = !pressed;
+
         if (justPressed) {
             beganIn = isIn(xOrig, yOrig) && justPressed;
         }
+
         if (pressed && beganIn) {
             if (wasIn == false) {
                 wasIn = isIn(x, y);
             }
+
             if (wasIn && occupied.isClear()) {
                 occupied = this;
             }
+
             if (occupied == this) {
                 return wasIn;
             } else {
                 return false;
             }
+
             // or just return true, but for some reason I spent a long time on this so leave
             // it;
         } else {
@@ -55,25 +60,25 @@ public class Button extends Shape {
     }
 
     private boolean isIn(double x, double y) {
-        return checker.autoIsIn(x, y, this) || checker.autoIsIn(x, y, getBoundingBox())
-                || checker.autoIsIn(x, y, getMidBar());
+        return checker.autoIsIn(x, y, this) || checker.autoIsIn(x, y, getBoundingBox()) || checker.autoIsIn(x, y, getMidBar());
         // checker.autoIsIn(x, y, this) || checker.autoIsIn(x, y,getMidBar());
     }
 
     public void drawState(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed,
-            String type, Mouse m) {
+                          String type, Mouse m) {
         drawState(g, unpressed, pressed, filled, filledPressed, type, m.getX(), m.getY(), m.getXClicked(),
-                m.getYClicked(), m.getIsPressed(), m.getOccupied());
+                  m.getYClicked(), m.getIsPressed(), m.getOccupied());
     }
 
     protected void drawState(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed,
-            String type, double mX, double mY, double xOrig, double yOrig, boolean isPressed, Button occupied) {
+                             String type, double mX, double mY, double xOrig, double yOrig, boolean isPressed, Button occupied) {
 
         if (isPressed(mX, mY, xOrig, yOrig, isPressed, occupied)) {// !this.isPressed(mX, mY)) {
-            draw(g, pressed, filled, type);
+            draw(g, pressed, filledPressed, type);
         } else {
-            draw(g, unpressed, filledPressed, type);
+            draw(g, unpressed, filled, type);
         }
+
         if (!(label == null)) {
             label.setX(this.getCenterX());
             label.setY(this.getCenterY());
@@ -86,14 +91,15 @@ public class Button extends Shape {
     }
 
     public void run(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed, String type,
-            Mouse m) {
+                    Mouse m) {
         if (wasIn && !isPressed(m.getX(), m.getY(), m.getXClicked(), m.getYClicked(), m.getIsPressed(), m.getOccupied())
                 && isIn(m.getX(), m.getY())) {
             doAction();
         }
+
         update();
         drawState(g, unpressed, pressed, filled, filledPressed, type, m.getX(), m.getY(), m.getXClicked(),
-                m.getYClicked(), m.getIsPressed(), m.getOccupied());
+                  m.getYClicked(), m.getIsPressed(), m.getOccupied());
     }
 
     public boolean isClear() {
@@ -120,5 +126,20 @@ public class Button extends Shape {
     // to override, does this every time run is called
     public void update() {
 
+    }
+
+    protected void center(double displayW, double displayH) {
+        if (getType().equals("rect")) {
+            if (getSubType().equals("centered")) {
+                setX(displayW / 2.0);
+                setY(displayH / 2.0);
+            } else if (getSubType().equals("normal")) {
+                setX((displayW / 2) - getW() / 2);
+                setY((displayH / 2) - getH() / 2);
+            }
+        } else if (getType().equals("oval")) {
+            setX(displayW / 2.0);
+            setY(displayH / 2.0);
+        }
     }
 }

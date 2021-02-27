@@ -64,6 +64,14 @@ public class Mouse {
     public void update(double newX, double newY) {
         setX(newX);
         setY(newY);
+
+        if (!isPressed) {
+            xBeforeClicked = x;// MouseInfo.getPointerInfo().getLocation().x;
+            yBeforeClicked = y;// MouseInfo.getPointerInfo().getLocation().y;
+        }
+    }
+
+    public void update() {
         if (!isPressed) {
             xBeforeClicked = x;// MouseInfo.getPointerInfo().getLocation().x;
             yBeforeClicked = y;// MouseInfo.getPointerInfo().getLocation().y;

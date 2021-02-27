@@ -17,16 +17,18 @@ public class Drawer {
     protected double maxX = Double.MAX_VALUE;
     protected double maxY = Double.MAX_VALUE;
     protected Color c;
-    public PIDController xcontroller;
-    public PIDController ycontroller;
+    // public PIDController xcontroller;
+    // public PIDController ycontroller;
+    public XController xcontroller;
+    public YController ycontroller;
     public int delay = 20;// Main.timerSpeed;
 
     public Drawer(double newX, double newY, double P, double I, double D, int d) {
         x = newX;
         y = newY;
         delay = d;
-        xcontroller = new PIDController(P, I, D, (double) delay / 1000.0);
-        ycontroller = new PIDController(P, I, D, (double) delay / 1000.0);
+        xcontroller = new XController(P, I, D, (double) delay / 1000.0, this);
+        ycontroller = new YController(P, I, D, (double) delay / 1000.0, this);
     }
 
     public Drawer(Drawer newOne) {
@@ -46,8 +48,8 @@ public class Drawer {
         x = newX;
         y = newY;
         delay = d;
-        xcontroller = new PIDController(1, 0, 0, (double) delay / 1000.0);
-        ycontroller = new PIDController(1, 0, 0, (double) delay / 1000.0);
+        xcontroller = new XController(1, 0, 0, (double) delay / 1000.0, this);
+        ycontroller = new YController(1, 0, 0, (double) delay / 1000.0, this);
     }
 
     public Drawer(double newX, double newY, String t, int d) {
@@ -76,6 +78,7 @@ public class Drawer {
         if (type != null) {
             return type;
         }
+
         return "";
     }
 
@@ -83,6 +86,15 @@ public class Drawer {
         if (type != null && type.split(" ").length >= 1) {
             return type.split(" ")[0];
         }
+
+        return "";
+    }
+
+    public String getType(int level) {
+        if (type != null && type.split(" ").length >= 1) {
+            return type.split(" ")[level];
+        }
+
         return "";
     }
 
@@ -92,6 +104,7 @@ public class Drawer {
         } else if (type != null && !(type.split(" ").length > 1)) {
             return "normal";
         }
+
         return "";
     }
 
@@ -169,37 +182,31 @@ public class Drawer {
     }
 
     public boolean setXPID(double desired) {
-        double actual = getX();
-        if (Math.abs(actual - desired) > 0.01) {
-            actual = xcontroller.PIDout(actual, desired);
-            setX(actual);
-            // try {
-            // Thread.sleep(delay);
-            // } catch (InterruptedException ex) {
-            // Thread.currentThread().interrupt();
-            // }
-            return false;
-        } else {
-            xcontroller.reset();
-            return true;
-        }
+        xcontroller.setDrawer(this);
+        return xcontroller.setPID(desired);
+        // double actual = getX();
+
+        // if (Math.abs(actual - desired) > 0.01) {
+        //     setX(xcontroller.PIDout(actual, desired));
+        //     return false;
+        // } else {
+        //     xcontroller.reset();
+        //     return true;
+        // }
     }
 
     public boolean setYPID(double desired) {
-        double actual = getY();
-        if (Math.abs(actual - desired) > 0.01) {
-            actual = ycontroller.PIDout(actual, desired);
-            setY(actual);
-            // try {
-            // Thread.sleep(delay);
-            // } catch (InterruptedException ex) {
-            // Thread.currentThread().interrupt();
-            // }
-            return false;
-        } else {
-            ycontroller.reset();
-            return true;
-        }
+        ycontroller.setDrawer(this);
+        return ycontroller.setPID(desired);
+        // double actual = getY();
+
+        // if (Math.abs(actual - desired) > 0.01) {
+        //     setY(ycontroller.PIDout(actual, desired));
+        //     return false;
+        // } else {
+        //     ycontroller.reset();
+        //     return true;
+        // }
     }
 
     public void incrementX(double i) {

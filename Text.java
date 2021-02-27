@@ -117,6 +117,7 @@ public class Text extends Drawer {
     }
 
     public void draw(Graphics g, Color c, Font f) {
+        type = "text centered";
         g.setColor(c);
         g.setFont(font);
         setDimensions(f);

@@ -18,11 +18,11 @@ public class Slider extends Button {
         super(x, y, w, h, d);
         min = small;
         max = big;
-        legalInput(vert, hori);
+        setOrientation(vert, hori);
     }
 
-    private void legalInput(boolean v, boolean h) {
-        if (!(v == true && h == true)) {
+    private void setOrientation(boolean v, boolean h) {
+        if (!(v == h)) {
             vertical = v;
             horizontal = h;
         } else {
@@ -31,8 +31,9 @@ public class Slider extends Button {
     }
 
     public Slider(double x, double y, double w, double h, boolean vert, boolean hori, double min, double max,
-            double small, double big, int d) {
+                  double small, double big, int d) {
         this(x, y, w, h, vert, hori, small, big, d);
+
         if (horizontal) {
             setMinY(y);
             setMaxY(y);
@@ -52,11 +53,12 @@ public class Slider extends Button {
             midBarW = midBarThickness;
             midBarX = x - (int) midBarW / 2;
         }
+
         midBar = new Shape(midBarX, midBarY, midBarW, midBarH, "rect normal", d);
     }
 
     public Slider(double x, double y, double w, double h, boolean vert, boolean hori, double min, double max,
-            double small, double big, double initial, int d) {
+                  double small, double big, double initial, int d) {
         this(x, y, w, h, vert, hori, min, max, small, big, d);
         lastVal = initial;
         setVal(initial);
@@ -64,7 +66,7 @@ public class Slider extends Button {
 
     public Slider(Slider s) {
         this(s.getX(), s.getY(), s.getW(), s.getH(), s.vertical, s.horizontal, s.getMinCoor(), s.getMaxCoor(), s.min,
-                s.max, s.lastVal, s.delay);
+             s.max, s.lastVal, s.delay);
     }
 
     public void setMinCoor(double coor) {
@@ -89,6 +91,7 @@ public class Slider extends Button {
         } else if (vertical) {
             return getMaxY();
         }
+
         return 0;
     }
 
@@ -98,6 +101,7 @@ public class Slider extends Button {
         } else if (vertical) {
             return getMinY();
         }
+
         return 0;
     }
 
@@ -113,13 +117,15 @@ public class Slider extends Button {
             midBarW = midBarThickness;
             midBarX = getX() - (int) midBarW / 2;
         }
+
         midBar = new Shape(midBarX, midBarY, midBarW, midBarH, "rect", delay);
     }
 
     protected void slide(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed, String type,
-            double mouseX, double mouseY, double xOrig, double yOrig, boolean ispressed, Button occupied) {
+                         double mouseX, double mouseY, double xOrig, double yOrig, boolean ispressed, Button occupied) {
         updateMidBar();
         setVal(lastVal);
+
         if (isPressed(mouseX, mouseY, xOrig, yOrig, ispressed, occupied)) {
             setXSafe(mouseX);
             setYSafe(mouseY);
@@ -127,16 +133,17 @@ public class Slider extends Button {
             setXSafe(getX());
             setYSafe(getY());
         }
+
         drawState(g, unpressed, pressed, filled, filledPressed, type, mouseX, mouseY, xOrig, yOrig, ispressed,
-                occupied);
+                  occupied);
         midBar.draw(g, Color.gray, true);
         new Shape(getX(), getY(), 5, 5, delay).draw(g, Color.white, true, "oval");
     }
 
     public void slide(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed, String type,
-            Mouse m) {
+                      Mouse m) {
         slide(g, unpressed, pressed, filled, filledPressed, type, m.getX(), m.getY(), m.getXClicked(), m.getYClicked(),
-                m.getIsPressed(), m.getOccupied());
+              m.getIsPressed(), m.getOccupied());
     }
 
     public double getVal(double minimum, double maximum) {
@@ -148,18 +155,20 @@ public class Slider extends Button {
     public double getVal() {
         if (horizontal) {
             lastVal = map(getX(), getMinX(), getMaxX(), min, max);// min + ((max - min) / (getMaxX() - getMinX())) *
-                                                                  // (getX() - getMinX());
+            // (getX() - getMinX());
             return lastVal;
         } else if (vertical) {
             lastVal = map(getY(), getMinY(), getMaxY(), min, max);// min + ((max - min) / (getMaxY() - getMinY())) *
-                                                                  // (getY() - getMinY());
+            // (getY() - getMinY());
             return lastVal;
         }
+
         return 0.0;
     }
 
     public void setVal(double val) {
         lastVal = val;
+
         if (horizontal) {
             setXSafe(map(val, min, max, getMinX(), getMaxX()));
         } else if (vertical) {
@@ -181,6 +190,7 @@ public class Slider extends Button {
     @Override
     public Shape getBoundingBox() {
         updateMidBar();
+
         if (getType().equals("oval")) {
             if (horizontal) {
                 return new Shape(getMinX(), getMinY() - getH() / 2, midBarW, getH() + 1, "rect normal", delay);
@@ -203,6 +213,7 @@ public class Slider extends Button {
                 }
             }
         }
+
         return new Shape(0, 0, 0, 0, delay);
     }
 
@@ -217,12 +228,22 @@ public class Slider extends Button {
     }
 
     public void run(Graphics g, Color unpressed, Color pressed, boolean filled, boolean filledPressed, String type,
-            Mouse m) {
+                    Mouse m) {
         update();
         slide(g, unpressed, pressed, filled, filledPressed, type, m.getX(), m.getY(), m.getXClicked(), m.getYClicked(),
-                m.getIsPressed(), m.getOccupied());
+              m.getIsPressed(), m.getOccupied());
         doAction();
 
+    }
+
+    protected void center(double displayW, double displayH, double offset) {
+        if (horizontal) {
+            setMinCoor((displayW / 2) - (displayW * offset));
+            setMaxCoor((displayW / 2) + (displayW * offset));
+        } else if (vertical) {
+            setMinCoor((displayH / 2) - (displayH * offset));
+            setMaxCoor((displayH / 2) + (displayH * offset));
+        }
     }
 
 }

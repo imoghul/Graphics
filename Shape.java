@@ -1,5 +1,6 @@
 package Graphics;
 
+import Graphics.Mouse;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
@@ -66,6 +67,7 @@ public class Shape extends Drawer {
                 return x;
             }
         }
+
         return 0;
     }
 
@@ -86,6 +88,7 @@ public class Shape extends Drawer {
                 return y;
             }
         }
+
         return 0;
     }
 
@@ -108,17 +111,19 @@ public class Shape extends Drawer {
     public void rect(Graphics g, Color c, boolean filled) {
         type = "rect normal";
         g.setColor(c);
+
         if (filled) {
             g.fillRect((int) getX(), (int) getY(), (int) getW(), (int) getH());
         } else {
             g.drawRect((int) getX(), (int) getY(), (int) getW(), (int) getH());// g.drawRect(getX(), getY(), getW(),
-                                                                               // getH());
+            // getH());
         }
     }
 
     public void rectCentered(Graphics g, Color c, boolean filled) {
         type = "rect centered";
         g.setColor(c);
+
         if (filled) {
             g.fillRect((int) (getX() - w / 2.0), (int) (getY() - h / 2.0), (int) getW(), (int) getH());
         } else {
@@ -129,12 +134,13 @@ public class Shape extends Drawer {
     public void oval(Graphics g, Color c, boolean filled) {
         type = "oval";
         g.setColor(c);
+
         if (filled) {
             g.fillOval((int) getX() - (int) (getW() / 2.0), (int) getY() - (int) (getH() / 2.0), (int) getW(),
-                    (int) getH());
+                       (int) getH());
         } else {
             g.drawOval((int) getX() - (int) (getW() / 2.0), (int) getY() - (int) (getH() / 2.0), (int) getW(),
-                    (int) getH());
+                       (int) getH());
         }
     }
 
@@ -153,6 +159,43 @@ public class Shape extends Drawer {
         } else if (getType().equals("oval")) {
             oval(g, c, filled);
         }
+    }
+
+    public void draw(Graphics g, boolean filled) {
+        if (getType().equals("rect")) {
+            if (getSubType().equals("normal")) {
+                rect(g, c, filled);
+            } else if (getSubType().equals("centered")) {
+                rectCentered(g, c, filled);
+            }
+        } else if (getType().equals("oval")) {
+            oval(g, c, filled);
+        }
+    }
+
+    public void run(Graphics g, Color c, boolean filled, Mouse m) {
+        update(m);
+        draw(g, c, filled);
+    }
+
+    public void run(Graphics g, Color c, boolean filled, String type, Mouse m) {
+        update(m);
+        draw(g, c, filled, type);
+    }
+
+    public void run(Graphics g, boolean filled, Mouse m) {
+        update(m);
+        draw(g, c, filled);
+    }
+
+    public void run(Graphics g, boolean filled, String type, Mouse m) {
+        update(m);
+        draw(g, c, filled, type);
+    }
+
+    // to Override
+    public void update(Mouse m) {
+
     }
 
 }

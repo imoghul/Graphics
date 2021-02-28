@@ -217,13 +217,11 @@ public class Slider extends Button {
         return new Shape(0, 0, 0, 0, delay);
     }
 
-    // to override, does this every iteration run is called and should set the value
-    // of whatever this slider denotes
+    // to override, does this every iteration run is called and should set the value of whatever this slider denotes
     public void doAction() {
     }
 
-    // to override, does this every iteration run is called and should set the value
-    // of whatever this slider denotes
+    // to override, does this every iteration run is called and should update view on front end
     public void update() {
     }
 

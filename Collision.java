@@ -136,13 +136,12 @@ public class Collision {
         // int yOval = (int)Math.round(ovalR * Math.sin(theta1));
         // g.drawLine((int)oval.getCenterX(), (int)oval.getCenterY(), (int)oval.getCenterX() + xOval, (int)oval.getCenterY() + yOval);
 
-        // int x = (int)Math.round(a1 * Math.cos(theta1));
-        // int y = (int)Math.round(b1 * Math.sin(theta1));
+        int x = (int)Math.round(a1 * Math.cos(theta1));
+        int y = (int)Math.round(b1 * Math.sin(theta1));
+
         // g.drawLine((int)oval.getCenterX(), (int)oval.getCenterY(), (int)oval.getCenterX() + x, (int)oval.getCenterY() + y);
-        
 
-
-        return (d < ovalR + rectR);
+        return (d < (Math.sqrt(x * x + y * y)) + rectR);
     }
 
     public boolean autoIsIn(double x, double y, Shape one) {

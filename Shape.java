@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 import javax.swing.*;
-import java.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
